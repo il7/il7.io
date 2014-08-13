@@ -470,6 +470,7 @@ a {
 .nav-item {
 	display: inline-block;
 	vertical-align: middle;
+	margin-left: -4px;
 	height: 100%;
 	font-weight: bold;
 	font-family: "pt-sans", Verdana, sans-serif;
@@ -477,14 +478,16 @@ a {
 	        transition-property: font-size;
 }
 
-.nav-item:first-child {
-	margin-left: 0;
-}
-
 .nav-item > a {
 	display: block;
 	padding: 5px 10px;
 	text-decoration: none;
+	-webkit-transition-property: padding;
+	        transition-property: padding;
+}
+
+.nav-item > a:hover {
+	text-decoration: underline;
 }
 
 .nav-item[data-item="projects"] > a {
@@ -510,12 +513,17 @@ a {
 }
 
 .l-header {
+	position: fixed;
+	top: 0;
+	z-index: 1000;
 	background-color: #292623;
 	color: #faf9f5;
 }
 
 .l-header-wrapper {
 	table-layout: auto;
+	-webkit-transition-property: padding;
+	        transition-property: padding;
 }
 
 .l-header-wrapper > .slice-item {
@@ -526,6 +534,33 @@ a {
 	width: 54px;
 }
 
+.l-header-buffer {
+	display: block;
+	height: 80px;
+	-webkit-transition-property: height;
+	        transition-property: height;
+}
+
+@media only all and (min-width: 0) and (max-width: 399px) {
+
+.logo {
+	margin: 5px 0 5px 5px;
+}
+
+.nav {
+	padding-right: 5px;
+}
+
+.nav-item {
+	font-size: 14px;
+}
+
+.nav-item > a {
+	padding: 5px;
+}
+
+}
+
 @media only all and (min-width: 0) and (max-width: 599px) {
 
 .logo,
@@ -534,36 +569,20 @@ a {
 	height: 30px;
 }
 
-}
-
-@media only all and (min-width: 0) and (max-width: 359px) {
-
-.nav-item {
-	font-size: 12px;
+.l-header-buffer {
+	height: 50px;
 }
 
 }
 
-@media only all and (min-width: 0) and (max-width: 399px) {
+@media only all and (min-width: 600px) {
 
-.nav-item > a {
-	padding: 5px;
+.logo {
+	margin: 20px;
 }
-
-}
-
-@media only all and (min-width: 360px) and (max-width: 399px) {
-
-.nav-item {
-	font-size: 14px;
-}
-
-}
-
-@media only all and (min-width: 720px) {
 
 .nav {
-	padding-right: 10px;
+	padding: 0 10px 0 0;
 }
 
 .nav-item > a {

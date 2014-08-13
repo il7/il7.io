@@ -1,4 +1,9 @@
 .l-header {
+	position: fixed;
+	top: 0;
+
+	z-index: 1000;
+
 	background-color: $site-dark;
 	color: $site-light;
 }
@@ -7,9 +12,23 @@
 	@extend .general-wrapper;
     table-layout: auto;
 
+	transition-property: padding;
+
 	& > .slice-item { vertical-align: middle; }
 }
 
 .l-header-logo {
 	width: 54px;
+}
+
+.l-header-buffer {
+	display: block;
+	height: 80px;
+	transition-property: height;
+}
+
+@include respond(0, 600px) {
+	.l-header-buffer {
+		height: 50px;
+	}
 }
