@@ -209,6 +209,10 @@ strong {
 	-webkit-backface-visibility: hidden;
 }
 
+.content > * {
+	margin-bottom: 3%;
+}
+
 .content ul {
 	list-style: square outside;
 }
