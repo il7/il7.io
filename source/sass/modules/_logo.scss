@@ -1,0 +1,35 @@
+.logo {
+	display: block;
+	margin: 10px;
+}
+
+.logo-icon {
+}
+
+.logo,
+.logo-icon {
+	width: 8vw;
+	height: 5vw;
+	transition-property: width, height, margin;
+}
+
+
+@include respond(0, 600px) {
+	.logo,
+	.logo-icon {
+		width: 48px;
+		height: 30px;
+	} 
+}
+
+@include respond(820px) {
+	.logo,
+	.logo-icon {
+		width: 66px;
+		height: 40px;
+	} 
+}
+
+// @include respond(720px) {
+// 	.logo { margin: 20px; }
+// }

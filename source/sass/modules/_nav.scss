@@ -1,0 +1,47 @@
+.nav {
+	display: block;
+	height: 100%;
+}
+
+.nav-item {
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+
+	font-weight: bold;
+	font-family: $fontstack-sans;
+
+	transition-property: font-size;
+
+	&:first-child { margin-left: 0; }
+
+	& > a {
+		display: block;
+		padding: 5px 10px;
+
+		text-decoration: none;
+	}
+	
+	&[data-item="projects"] > a { color: $site-red; }
+	&[data-item="articles"] > a { color: $site-yellow; }
+	&[data-item="contribute"] > a { color: $site-teal; }
+	&[data-item="about"] > a { color: $site-purple; }
+}
+
+@include respond(0, 360px) {
+	.nav-item { font-size: 12px; }
+}
+
+@include respond(360px, 400px) {
+	.nav-item { font-size: 14px; }
+}
+
+@include respond(0, 400px) {
+	.nav-item > a { padding: 5px; }
+}
+
+@include respond(720px) {
+	.nav { padding-right: 10px; }
+	.nav-item > a { padding: 20px 10px; }
+
+}

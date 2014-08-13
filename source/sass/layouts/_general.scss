@@ -1,0 +1,7 @@
+.general {}
+
+$general-max: 960px;
+.general-wrapper { 
+	margin: 0 auto;
+	max-width: $general-max;
+}

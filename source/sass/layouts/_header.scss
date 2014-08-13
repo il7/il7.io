@@ -1,0 +1,15 @@
+.l-header {
+	background-color: $site-dark;
+	color: $site-light;
+}
+
+.l-header-wrapper {
+	@extend .general-wrapper;
+    table-layout: auto;
+
+	& > .slice-item { vertical-align: middle; }
+}
+
+.l-header-logo {
+	width: 54px;
+}

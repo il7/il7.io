@@ -27,7 +27,7 @@ $vptext-mid: ($vptext-min + $vptext-max) / 2;
 .text-vp-huge { @include viewport-text(44); }
  
 // min
-@include respond(0, $vptext-min) {
+@include respond(-1, $vptext-min) {
 	.text-vp-small { @include viewport-text-limit(15, $vptext-min); }
 	.text-vp { @include viewport-text-limit(22, $vptext-min); }
 	.text-vp-medium { @include viewport-text-limit(28, $vptext-min); }
