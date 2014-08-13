@@ -20,11 +20,11 @@ $vptext-mid: ($vptext-min + $vptext-max) / 2;
 	line-height: #{($font-size * 1.8 / $vptext-viewport) * $limit};
 }
 
-.text-vp-small { @include viewport-text(16); }
+.text-vp-small { @include viewport-text(15); }
 .text-vp { @include viewport-text(22); }
 .text-vp-medium { @include viewport-text(28); }
-.text-vp-large { @include viewport-text(40); }
-.text-vp-huge { @include viewport-text(54); }
+.text-vp-large { @include viewport-text(36); }
+.text-vp-huge { @include viewport-text(44); }
  
 // min
 @include respond(0, $vptext-min) {
@@ -41,7 +41,7 @@ $vptext-mid: ($vptext-min + $vptext-max) / 2;
 	.text-vp { @include viewport-text(20); }
 	.text-vp-medium { @include viewport-text(30); }
 	.text-vp-large { @include viewport-text(40); }
-	.text-vp-huge { @include viewport-text(38); }
+	.text-vp-huge { @include viewport-text(48); }
 }
 
 // max

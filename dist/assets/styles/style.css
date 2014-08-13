@@ -228,8 +228,8 @@ strong {
 }
 
 .text-vp-small {
-	font-size: 1.86047vw;
-	line-height: 3.34884vw;
+	font-size: 1.74419vw;
+	line-height: 3.13953vw;
 }
 
 .text-vp {
@@ -243,13 +243,13 @@ strong {
 }
 
 .text-vp-large {
-	font-size: 4.65116vw;
-	line-height: 8.37209vw;
+	font-size: 4.18605vw;
+	line-height: 7.53488vw;
 }
 
 .text-vp-huge {
-	font-size: 6.27907vw;
-	line-height: 11.30233vw;
+	font-size: 5.11628vw;
+	line-height: 9.2093vw;
 }
 
 .content ul {
@@ -500,8 +500,8 @@ a {
 }
 
 .text-vp-huge {
-	font-size: 4.4186vw;
-	line-height: 7.95349vw;
+	font-size: 5.5814vw;
+	line-height: 10.04651vw;
 }
 
 }
