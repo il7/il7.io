@@ -227,40 +227,29 @@ strong {
 	text-align: right;
 }
 
-.text-vp-tiny {
-	font-size: 1.66667vw;
-	line-height: 3vw;
-}
-
 .text-vp-small {
-	font-size: 2.08333vw;
-	line-height: 3.75vw;
+	font-size: 1.86047vw;
+	line-height: 3.34884vw;
 }
 
-.text-vp,
-.content p,
-.content ul,
-.content ol,
-.content blockquote,
-.content pre,
-.content code {
-	font-size: 2.5vw;
-	line-height: 4.5vw;
+.text-vp {
+	font-size: 2.55814vw;
+	line-height: 4.60465vw;
+}
+
+.text-vp-medium {
+	font-size: 3.25581vw;
+	line-height: 5.86047vw;
 }
 
 .text-vp-large {
-	font-size: 4.16667vw;
-	line-height: 7.5vw;
+	font-size: 4.65116vw;
+	line-height: 8.37209vw;
 }
 
-.text-vp-huge,
-.content h1 {
-	font-size: 7.5vw;
-	line-height: 13.5vw;
-}
-
-.content > * {
-	margin-bottom: 2%;
+.text-vp-huge {
+	font-size: 6.27907vw;
+	line-height: 11.30233vw;
 }
 
 .content ul {
@@ -461,72 +450,87 @@ a {
 
 @media only all and (min-width: 0) and (max-width: 639px) {
 
-.text-vp-tiny {
-	font-size: 10.66667px;
-	line-height: 19.2px;
-}
-
 .text-vp-small {
-	font-size: 13.33333px;
-	line-height: 24px;
+	font-size: 11.16279px;
+	line-height: 20.09302px;
 }
 
-.text-vp,
-.content p,
-.content ul,
-.content ol,
-.content blockquote,
-.content pre,
-.content code {
-	font-size: 16px;
-	line-height: 28.8px;
+.text-vp {
+	font-size: 16.37209px;
+	line-height: 29.46977px;
+}
+
+.text-vp-medium {
+	font-size: 20.83721px;
+	line-height: 37.50698px;
 }
 
 .text-vp-large {
-	font-size: 26.66667px;
-	line-height: 48px;
+	font-size: 26.7907px;
+	line-height: 48.22326px;
 }
 
-.text-vp-huge,
-.content h1 {
-	font-size: 48px;
-	line-height: 86.4px;
+.text-vp-huge {
+	font-size: 32.74419px;
+	line-height: 58.93953px;
+}
+
+}
+
+@media only all and (min-width: 860px) and (max-width: 1079px) {
+
+.text-vp-small {
+	font-size: 1.62791vw;
+	line-height: 2.93023vw;
+}
+
+.text-vp {
+	font-size: 2.32558vw;
+	line-height: 4.18605vw;
+}
+
+.text-vp-medium {
+	font-size: 3.48837vw;
+	line-height: 6.27907vw;
+}
+
+.text-vp-large {
+	font-size: 4.65116vw;
+	line-height: 8.37209vw;
+}
+
+.text-vp-huge {
+	font-size: 4.4186vw;
+	line-height: 7.95349vw;
 }
 
 }
 
 @media only all and (min-width: 1080px) {
 
-.text-vp-tiny {
-	font-size: 18px;
-	line-height: 32.4px;
-}
-
 .text-vp-small {
-	font-size: 22.5px;
-	line-height: 40.5px;
+	font-size: 17.5814px;
+	line-height: 31.64651px;
 }
 
-.text-vp,
-.content p,
-.content ul,
-.content ol,
-.content blockquote,
-.content pre,
-.content code {
-	font-size: 27px;
-	line-height: 48.6px;
+.text-vp {
+	font-size: 25.11628px;
+	line-height: 45.2093px;
+}
+
+.text-vp-medium {
+	font-size: 37.67442px;
+	line-height: 67.81395px;
 }
 
 .text-vp-large {
-	font-size: 45px;
-	line-height: 81px;
+	font-size: 50.23256px;
+	line-height: 90.4186px;
 }
 
-.text-vp-huge,
-.content h1 {
-	font-size: 81px;
-	line-height: 145.8px;
+.text-vp-huge {
+	font-size: 60.27907px;
+	line-height: 108.50233px;
 }
 
 }
