@@ -1,6 +1,13 @@
 .l-header {
+	height: 80px;
+	transition-property: height;
+}
+
+.l-header-fixed {
 	position: fixed;
 	top: 0;
+	left: 0;
+	right: 0;
 
 	z-index: 1000;
 
@@ -9,7 +16,8 @@
 }
 
 .l-header-wrapper {
-	@extend .general-wrapper;
+	margin: 0 auto;
+	max-width: $general-max + 40px;
     table-layout: auto;
 
 	transition-property: padding;
@@ -21,14 +29,10 @@
 	width: 54px;
 }
 
-.l-header-buffer {
-	display: block;
-	height: 80px;
-	transition-property: height;
+@include respond(0, 400px) {
+	.l-header { height: 40px; }
 }
 
-@include respond(0, 600px) {
-	.l-header-buffer {
-		height: 50px;
-	}
+@include respond(400px, 600px) {
+	.l-header { height: 50px; }
 }

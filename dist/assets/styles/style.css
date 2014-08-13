@@ -506,21 +506,33 @@ a {
 	color: #955ce6;
 }
 
-.general-wrapper,
-.l-header-wrapper {
+.general-wrapper {
 	margin: 0 auto;
-	max-width: 960px;
+	max-width: 1120px;
+	padding: 0 20px;
+	-webkit-transition-property: padding;
+	        transition-property: padding;
 }
 
 .l-header {
+	height: 80px;
+	-webkit-transition-property: height;
+	        transition-property: height;
+}
+
+.l-header-fixed {
 	position: fixed;
 	top: 0;
+	left: 0;
+	right: 0;
 	z-index: 1000;
 	background-color: #292623;
 	color: #faf9f5;
 }
 
 .l-header-wrapper {
+	margin: 0 auto;
+	max-width: 1120px;
 	table-layout: auto;
 	-webkit-transition-property: padding;
 	        transition-property: padding;
@@ -532,13 +544,6 @@ a {
 
 .l-header-logo {
 	width: 54px;
-}
-
-.l-header-buffer {
-	display: block;
-	height: 80px;
-	-webkit-transition-property: height;
-	        transition-property: height;
 }
 
 @media only all and (min-width: 0) and (max-width: 399px) {
@@ -559,6 +564,14 @@ a {
 	padding: 5px;
 }
 
+.general-wrapper {
+	padding: 0 5px;
+}
+
+.l-header {
+	height: 40px;
+}
+
 }
 
 @media only all and (min-width: 0) and (max-width: 599px) {
@@ -569,7 +582,15 @@ a {
 	height: 30px;
 }
 
-.l-header-buffer {
+}
+
+@media only all and (min-width: 400px) and (max-width: 599px) {
+
+.general-wrapper {
+	padding: 0 10px;
+}
+
+.l-header {
 	height: 50px;
 }
 
