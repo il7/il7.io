@@ -1,0 +1,17 @@
+{
+	"name": "il7.io",
+	"homepage": "https://github.com/il7/il7.io",
+	"authors": [
+		"Evan Krambuhl <thekrambuhl@gmail.com>"
+	],
+	"license": "MIT",
+	"version": "0.1.0",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:il7/il7.io.git"
+	},
+	"dependencies": {
+		"jquery": "~2.1.1",
+		"underscore": "~1.6.0"
+	}
+}

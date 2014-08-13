@@ -1,0 +1,15 @@
+<header class="l-header">
+	<div class="l-header-wrapper slice slice-auto">
+		<div class="slice-item">
+			<a href="{{menu.home}}" class="logo"><h1><i class="logo-icon icon icon-il7">IL7</i></h1></a>
+		</div>
+
+		<div class="slice-item text-right"><ul class="nav">
+			{{#each menu.items}}
+			<li class="nav-item" data-item="{{key}}">
+				<a href="{{url}}" title="{{title}}">{{title}}</a>
+			</li>
+			{{/each}}
+		</ul></div>
+	</div>
+</header>

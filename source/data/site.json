@@ -1,0 +1,12 @@
+{
+	"title": "IL7",
+
+	"description": "",
+	"author": "IL7 / Evan Krambuhl",
+
+	"icon": "",
+	"apple-icon": "",
+
+	"scripts": ["lib", "app"],
+	"stylesheets": ["styles/style"]
+}

@@ -1,0 +1,20 @@
+{
+	"home": "#/",
+	"items": [{
+		"key": "projects",
+		"url": "#/projects",
+		"title": "Projects"
+	}, {
+		"key": "articles",
+		"url": "#/articles",
+		"title": "Articles"
+	}, {
+		"key": "contribute",
+		"url": "#/contribute",
+		"title": "Contribute"
+	}, {
+		"key": "about",
+		"url": "#/about",
+		"title": "About"
+	}]
+}
