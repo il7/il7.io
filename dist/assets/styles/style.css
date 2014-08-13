@@ -158,8 +158,8 @@ body {
 }
 
 body {
-	background: #fff;
-	color: #222;
+	background: #faf9f5;
+	color: #292623;
 	font-family: "Droid Serif", sans-serif;
 	font-size: 18px;
 	line-height: 1.6em;
@@ -169,27 +169,33 @@ body {
 }
 
 ::-moz-selection {
-	background: #909090;
+	background: #c7aaed;
+	color: #efe9f3;
 }
 
 ::selection {
-	background: #909090;
+	background: #c7aaed;
+	color: #efe9f3;
 }
 
 ::-moz-selection {
-	background: #909090;
+	background: #c7aaed;
+	color: #efe9f3;
 }
 
 img::-moz-selection {
-	background: #909090;
+	background: #c7aaed;
+	color: #efe9f3;
 }
 
 img::selection {
-	background: #909090;
+	background: #c7aaed;
+	color: #efe9f3;
 }
 
 img::-moz-selection {
-	background: #909090;
+	background: #c7aaed;
+	color: #efe9f3;
 }
 
 em,

@@ -9,12 +9,20 @@ $fontstack-mono: $font-mono, monospace;
 
 // COLORS
 
-$site-dark:  #222;
-$site-light: #fff;
+$site-dark:  #292623;
+$site-light: #faf9f5;
+
+$site-red: #ef554f;
+$site-yellow: #f2ca00;
+$site-teal: #00d99f;
+$site-blue: #5078e6;
+$site-purple: #955ce6;
+
+
 
 //site colors
 $site-bg: $site-light;
 $site-color: $site-dark;
 
 // when a user highlights text this is the super duper color!
-$selection-color: mix($site-light, $site-dark);
+$selection-color: mix($site-light, $site-purple);

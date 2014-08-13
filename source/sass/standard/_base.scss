@@ -16,10 +16,10 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-::selection 	 	{ background: $selection-color; }
-::-moz-selection 	{ background: $selection-color; }
-img::selection   	{ background: $selection-color; }
-img::-moz-selection { background: $selection-color; }
+::selection 	 	{ background: $selection-color; color: mix($selection-color, $site-light, 20); }
+::-moz-selection 	{ background: $selection-color; color: mix($selection-color, $site-light, 20); }
+img::selection   	{ background: $selection-color; color: mix($selection-color, $site-light, 20); }
+img::-moz-selection { background: $selection-color; color: mix($selection-color, $site-light, 20); }
 
 em, cite { font-style: italic; }
 strong { font-weight: bold; }
