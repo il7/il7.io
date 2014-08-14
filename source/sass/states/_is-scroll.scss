@@ -1,0 +1,17 @@
+.is-scrolling {
+}
+
+.is-scrolled-up {
+	div.l-header-mast {
+		transform: translate3d(0, 0px, 0)!important;
+	}
+}
+
+.is-scrolled-down {}
+
+.is-scrolled {}
+.is-scrolled-nav {
+	.l-header-mast {
+		transform: translate3d(0, -164px, 0);
+	}
+}

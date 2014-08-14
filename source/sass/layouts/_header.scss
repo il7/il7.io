@@ -1,10 +1,5 @@
 .l-header {
 	height: 80px;
-	transition-property: height;
-
-	&:hover {
-		.l-header-mast { transform: translate3d(0, 0px, 0); }
-	}
 }
 
 .l-header-mast {
@@ -19,7 +14,6 @@
 	color: $site-light;
 
 	transition-property: transform;
-	// transform: translate3d(0, -100px, 0);
 }
 
 .l-header-wrapper {
@@ -52,13 +46,7 @@
 }
 
 @include respond(0, 400px) {
-	.l-header { height: 40px; }
-
 	.l-header-menu {
 		text-align: left;
 	}
-}
-
-@include respond(400px, 600px) {
-	.l-header { height: 50px; }
 }
