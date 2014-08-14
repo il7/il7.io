@@ -211,8 +211,12 @@ strong {
 * {
 	-moz-box-sizing: border-box;
 	     box-sizing: border-box;
-	-webkit-transition: none 0.25s ease;
-	        transition: none 0.25s ease;
+	-webkit-transition-property: none;
+	        transition-property: none;
+	-webkit-transition-duration: 0.25s;
+	        transition-duration: 0.25s;
+	-webkit-transition-timing-function: ease;
+	        transition-timing-function: ease;
 	-webkit-backface-visibility: hidden;
 }
 
@@ -539,8 +543,6 @@ a {
 	color: #faf9f5;
 	-webkit-transition-property: -webkit-transform;
 	        transition-property: transform;
-	-webkit-transition-delay: 0.5s;
-	        transition-delay: 0.5s;
 }
 
 .l-header-wrapper {

@@ -27,6 +27,9 @@ strong { font-weight: bold; }
 
 * {
     box-sizing: border-box;
-    transition: none 0.25s ease;
+    transition-property: none;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
+    
     -webkit-backface-visibility: hidden;
 }

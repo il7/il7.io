@@ -13,8 +13,10 @@
 	background-color: $site-dark;
 	color: $site-light;
 
+	// transform: translate3d(0, 0px, 0);
 	transition-property: transform;
-	transition-delay: 0.5s;
+	// transition-duration: 0.5s;
+	// transition-delay: 1s;
 }
 
 .l-header-wrapper {

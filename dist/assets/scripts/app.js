@@ -33,6 +33,42 @@ Seven.HeaderView = (function() {
 		}
 	});
 })()
+Seven.WindowView = (function() {
+	return Tendon.View.extend({
+		events: {
+			'resize': 'updateScroll',
+			'scroll': 'updateScroll'
+		},
+
+		updateScroll: function() {
+			var nav = app.header && app.header.height || 50;
+			this.pos = this.$el.scrollTop();
+
+			app.state('scrolling', true);
+			app.state('scrolled', this.pos > 0);
+			app.state('scrolled-nav', this.pos > nav / 4 * 3);
+			
+			this.updateScrollDirection();
+			
+			clearTimeout(this.timer);
+			this.timer = 
+				_.delay(_.bind(this.cleanupScroll, this), 200);
+		},
+
+		updateScrollDirection: _.throttle(function () {
+			if (this.pos && this.lastPos 
+				&& this.pos !== this.lastPos) {
+				app.state('scrolled-up', this.pos < this.lastPos);
+				app.state('scrolled-down', this.pos > this.lastPos);
+			}
+			this.lastPos = this.pos;
+		}, 200),
+
+		cleanupScroll: function () {
+			app.state('scrolling', false);
+		}
+	});
+})()
 
 Seven.ApplicationView = (function() {
 	return Tendon.View.extend({
@@ -43,45 +79,8 @@ Seven.ApplicationView = (function() {
 		},
 
 		initialize: function() {
+			this.window = new Seven.WindowView({ el: window });
 			this.header = new Seven.HeaderView({ el: this.ui.header });
-
-			this.setupScrollStates();
-		},
-
-		setupScrollStates: function() {
-			var self = this;
-			var pos, lastPos;
-			var timing = 200;
-
-			function cleanupScroll() {
-				self.state('scrolling', false);
-			}
-
-			var updateDir = _.throttle(function () {
-				if (pos && lastPos && pos !== lastPos) {
-					self.state('scrolled-up', pos < lastPos);
-					self.state('scrolled-down', pos > lastPos);
-				}
-
-				lastPos = pos;
-			}, 200);
-
-			var updateScroll = function() {
-				var nav = self.header.height;
-				
-				clearTimeout(self.timer);
-				self.timer = _.delay(cleanupScroll, timing);
-
-				pos = $(this).scrollTop();
-
-				self.state('scrolling', true);
-				self.state('scrolled', pos > 0);
-				self.state('scrolled-nav', pos > nav / 4 * 3);
-				updateDir();
-			};
-
-			$(window).on('resize scroll', updateScroll);
-			$(document).on('touchstart touchmove touchend', updateScroll);
 		}
 
 
@@ -92,4 +91,4 @@ $(function() {
 	window.app = new Seven.ApplicationView();
 });
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmpzIiwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZXMiOlsiYXBwLmpzIl0sInNvdXJjZXNDb250ZW50IjpbInZhciBTZXZlbiA9IGZ1bmN0aW9uKCkgeyByZXR1cm47IH07XG5cbi8vPWluY2x1ZGUoJ3ZpZXdzL2hlYWRlci5qcycpXG5cblNldmVuLkFwcGxpY2F0aW9uVmlldyA9IChmdW5jdGlvbigpIHtcblx0cmV0dXJuIFRlbmRvbi5WaWV3LmV4dGVuZCh7XG5cdFx0ZWw6ICcjYXBwbGljYXRpb24nLFxuXHRcdHVpOiB7XG5cdFx0XHRoZWFkZXI6ICcubC1oZWFkZXInLFxuXHRcdFx0Zm9vdGVyOiAnLmwtZm9vdGVyJ1xuXHRcdH0sXG5cblx0XHRpbml0aWFsaXplOiBmdW5jdGlvbigpIHtcblx0XHRcdHRoaXMuaGVhZGVyID0gbmV3IFNldmVuLkhlYWRlclZpZXcoeyBlbDogdGhpcy51aS5oZWFkZXIgfSk7XG5cblx0XHRcdHRoaXMuc2V0dXBTY3JvbGxTdGF0ZXMoKTtcblx0XHR9LFxuXG5cdFx0c2V0dXBTY3JvbGxTdGF0ZXM6IGZ1bmN0aW9uKCkge1xuXHRcdFx0dmFyIHNlbGYgPSB0aGlzO1xuXHRcdFx0dmFyIHBvcywgbGFzdFBvcztcblx0XHRcdHZhciB0aW1pbmcgPSAyMDA7XG5cblx0XHRcdGZ1bmN0aW9uIGNsZWFudXBTY3JvbGwoKSB7XG5cdFx0XHRcdHNlbGYuc3RhdGUoJ3Njcm9sbGluZycsIGZhbHNlKTtcblx0XHRcdH1cblxuXHRcdFx0dmFyIHVwZGF0ZURpciA9IF8udGhyb3R0bGUoZnVuY3Rpb24gKCkge1xuXHRcdFx0XHRpZiAocG9zICYmIGxhc3RQb3MgJiYgcG9zICE9PSBsYXN0UG9zKSB7XG5cdFx0XHRcdFx0c2VsZi5zdGF0ZSgnc2Nyb2xsZWQtdXAnLCBwb3MgPCBsYXN0UG9zKTtcblx0XHRcdFx0XHRzZWxmLnN0YXRlKCdzY3JvbGxlZC1kb3duJywgcG9zID4gbGFzdFBvcyk7XG5cdFx0XHRcdH1cblxuXHRcdFx0XHRsYXN0UG9zID0gcG9zO1xuXHRcdFx0fSwgMjAwKTtcblxuXHRcdFx0dmFyIHVwZGF0ZVNjcm9sbCA9IGZ1bmN0aW9uKCkge1xuXHRcdFx0XHR2YXIgbmF2ID0gc2VsZi5oZWFkZXIuaGVpZ2h0O1xuXHRcdFx0XHRcblx0XHRcdFx0Y2xlYXJUaW1lb3V0KHNlbGYudGltZXIpO1xuXHRcdFx0XHRzZWxmLnRpbWVyID0gXy5kZWxheShjbGVhbnVwU2Nyb2xsLCB0aW1pbmcpO1xuXG5cdFx0XHRcdHBvcyA9ICQodGhpcykuc2Nyb2xsVG9wKCk7XG5cblx0XHRcdFx0c2VsZi5zdGF0ZSgnc2Nyb2xsaW5nJywgdHJ1ZSk7XG5cdFx0XHRcdHNlbGYuc3RhdGUoJ3Njcm9sbGVkJywgcG9zID4gMCk7XG5cdFx0XHRcdHNlbGYuc3RhdGUoJ3Njcm9sbGVkLW5hdicsIHBvcyA+IG5hdiAvIDQgKiAzKTtcblx0XHRcdFx0dXBkYXRlRGlyKCk7XG5cdFx0XHR9O1xuXG5cdFx0XHQkKHdpbmRvdykub24oJ3Jlc2l6ZSBzY3JvbGwnLCB1cGRhdGVTY3JvbGwpO1xuXHRcdFx0JChkb2N1bWVudCkub24oJ3RvdWNoc3RhcnQgdG91Y2htb3ZlIHRvdWNoZW5kJywgdXBkYXRlU2Nyb2xsKTtcblx0XHR9XG5cblxuXHR9KTtcbn0pKClcblxuLy89aW5jbHVkZSgnc3RhcnR1cC5qcycpIl0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmpzIiwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZXMiOlsiYXBwLmpzIl0sInNvdXJjZXNDb250ZW50IjpbInZhciBTZXZlbiA9IGZ1bmN0aW9uKCkgeyByZXR1cm47IH07XG5cbi8vPWluY2x1ZGUoJ3ZpZXdzL2hlYWRlci5qcycpXG4vLz1pbmNsdWRlKCd3aW5kb3cuanMnKVxuXG5TZXZlbi5BcHBsaWNhdGlvblZpZXcgPSAoZnVuY3Rpb24oKSB7XG5cdHJldHVybiBUZW5kb24uVmlldy5leHRlbmQoe1xuXHRcdGVsOiAnI2FwcGxpY2F0aW9uJyxcblx0XHR1aToge1xuXHRcdFx0aGVhZGVyOiAnLmwtaGVhZGVyJyxcblx0XHRcdGZvb3RlcjogJy5sLWZvb3Rlcidcblx0XHR9LFxuXG5cdFx0aW5pdGlhbGl6ZTogZnVuY3Rpb24oKSB7XG5cdFx0XHR0aGlzLndpbmRvdyA9IG5ldyBTZXZlbi5XaW5kb3dWaWV3KHsgZWw6IHdpbmRvdyB9KTtcblx0XHRcdHRoaXMuaGVhZGVyID0gbmV3IFNldmVuLkhlYWRlclZpZXcoeyBlbDogdGhpcy51aS5oZWFkZXIgfSk7XG5cdFx0fVxuXG5cblx0fSk7XG59KSgpXG5cbi8vPWluY2x1ZGUoJ3N0YXJ0dXAuanMnKSJdLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
