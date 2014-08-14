@@ -13,10 +13,10 @@ Seven.ApplicationView = (function() {
 		initialize: function() {
 			this.header = new Seven.HeaderView({ el: this.ui.header });
 
-			this.setupScrollEvents();
+			this.setupScrollStates();
 		},
 
-		setupScrollEvents: function() {
+		setupScrollStates: function() {
 			var self = this;
 			var pos, lastPos;
 			var timing = 200;
@@ -48,8 +48,8 @@ Seven.ApplicationView = (function() {
 				updateDir();
 			};
 
-			$(window).on('scroll', updateScroll)
-				.on('resize', updateScroll);
+			$(window).on('resize scroll', updateScroll);
+			$(document).on('touchstart touchmove touchend', updateScroll);
 		}
 
 

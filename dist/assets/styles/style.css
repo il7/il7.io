@@ -539,6 +539,8 @@ a {
 	color: #faf9f5;
 	-webkit-transition-property: -webkit-transform;
 	        transition-property: transform;
+	-webkit-transition-delay: 0.5s;
+	        transition-delay: 0.5s;
 }
 
 .l-header-wrapper {
@@ -587,8 +589,10 @@ a {
 }
 
 .is-scrolled-up div.l-header-mast {
-	-webkit-transform: translate3d(0, 0px, 0) !important;
-	        transform: translate3d(0, 0px, 0) !important;
+	-webkit-transform: translate3d(0, 0px, 0);
+	        transform: translate3d(0, 0px, 0);
+	-webkit-transition-delay: 0s;
+	        transition-delay: 0s;
 }
 
 .is-scrolled-nav .l-header-mast {

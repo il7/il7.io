@@ -14,7 +14,8 @@
 		"jquery": "~2.1.1",
 		"underscore": "~1.6.0",
 		"backbone": "~1.1.2",
-		"Backbone.Tendon": "git@github.com:krambuhl/Backbone.Tendon.git#develop"
+		"Backbone.Tendon": "git@github.com:krambuhl/Backbone.Tendon.git#develop",
+		"hammerjs": "~2.0.2"
 	},
 	"resolutions": {
 		"jquery": "~2.1.1"
