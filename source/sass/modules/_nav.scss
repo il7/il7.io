@@ -1,6 +1,5 @@
 .nav {
-	display: block;
-	height: 100%;
+	display: inline-block;
 }
 
 .nav-item {
@@ -13,6 +12,8 @@
 	font-family: $fontstack-sans;
 
 	transition-property: font-size;
+
+	&:first-child { margin-left: 0; }
 
 	& > a {
 		display: block;
@@ -32,11 +33,22 @@
 	&[data-item="about"] > a { color: $site-purple; }
 }
 
+
 @include respond(0, 400px) {
-	.nav { padding-right: 5px; }
+	.nav { padding: 0 5px 0 0; }
 	.nav-item { font-size: 14px; }
 	.nav-item > a { padding: 5px; }
 }
+
+@include respond(0, 300px) {
+	.nav,
+	.nav-item { display: block; }
+
+	.nav { padding: 0 !important; }
+	.nav-item { margin-left: 0; }
+	.nav-item > a { padding: 0 5px !important; }
+}
+
 
 @include respond(600px) {
 	.nav { padding: 0 10px 0 0; }

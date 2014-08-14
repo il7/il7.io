@@ -1,11 +1,11 @@
 <header class="l-header">
-	<div class="l-header-fixed">
+	<div class="l-header-mast">
 		<div class="l-header-wrapper slice slice-auto">
 			<div class="slice-item l-header-logo">
 				<a href="{{menu.home}}" class="logo"><i class="logo-icon icon icon-il7-logo">IL7</i></a>
 			</div>
 
-			<div class="slice-item text-right"><ul class="nav text-vp">
+			<div class="slice-item l-header-nav"><ul class="nav text-vp">
 				{{#each menu.items}}
 				<li class="nav-item" data-item="{{key}}">
 					<a href="{{url}}" title="{{title}}">{{title}}</a>
@@ -14,6 +14,4 @@
 			</ul></div>
 		</div>
 	</div>
-
-	<div class="l-header-buffer"></div>
 </header>

@@ -3,9 +3,10 @@
 		// margin-bottom: 2%;
 	}
 	
-	h1, h2, h3, h4, h5, h6 {}
-
+	h1, h2, h3, h4, h5, h6,
 	p, ul, ol, blockquote, pre, code {
+		margin-top: 1.5vw;
+		margin-bottom: 1.5vw;
 	}
 
 	p, ul, ol, blockquote, pre, code {
@@ -29,5 +30,15 @@
 	pre {
 		font-family: $fontstack-mono;
 		& > code {}
+	}
+}
+
+@include respond(680px) {
+	.content {
+		h1, h2, h3, h4, h5, h6,
+		p, ul, ol, blockquote, pre, code {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
 	}
 }
