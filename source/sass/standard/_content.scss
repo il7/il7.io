@@ -1,25 +1,33 @@
 .content {
-	& > * {
-		// margin-bottom: 2%;
-	}
+	& > * { }
 	
 	h1, h2, h3, h4, h5, h6,
 	p, ul, ol, blockquote, pre, code {
-		margin-top: 1.5vw;
-		margin-bottom: 1.5vw;
 	}
 
-	p, ul, ol, blockquote, pre, code {
+	p, ul, ol, blockquote, pre, code { }
+
+	p, ul, ol, blockquote {
+		max-width: 840px;
+
+		&.text-vp-small { max-width: 720px; }
+		&.text-vp-medium { max-width: 840px; }
+		&.text-vp-large { max-width: 960px; }
+		&.text-vp-huge { max-width: 1120px; }
 	}
 
-	p { }
-
-	ul, ol { }
+	ul, ol { 
+		padding-left: 5vw;
+	}
 
 	ul { list-style: square outside; }
 	ol { list-style: lower-roman outside; }
 
 	blockquote {
+		// margin-left: 1.5vw;
+		padding-left: 1.5vw;
+		border-left: 0.5vw solid $site-dark;
+
 		& > * {}
 		& > label {
 			display: block;
@@ -28,17 +36,59 @@
 	}
 
 	pre {
-		font-family: $fontstack-mono;
-		& > code {}
-	}
-}
+		display: block;	
+		max-width: 1120px;
+		margin-left: auto;
+		margin-right: auto;
 
-@include respond(680px) {
-	.content {
-		h1, h2, h3, h4, h5, h6,
-		p, ul, ol, blockquote, pre, code {
-			margin-top: 10px;
-			margin-bottom: 10px;
+		overflow: scroll;
+		padding: 3vw 20px;
+
+		font-family: $fontstack-mono;
+
+		background-color: lighten($site-dark, 2);
+		color: $site-teal;
+
+		& > code {
+			margin: 0 auto;
+			max-width: 1080px;
 		}
 	}
 }
+
+.content-wrapper {
+	max-width: 1120px;
+	margin: 1vw auto;
+	// padding: 0 20px;
+
+	padding: 0 20px;
+
+	transition-property: padding;
+}
+
+.content-code {
+	position: relative;
+	margin: 2vw auto;
+
+	background-color: lighten($site-dark, 2);
+}
+
+@include respond(0, 400px) {
+	.content-wrapper { padding: 0 10px; }
+	.content-code > pre { padding-left: 10px; padding-right: 10px; }
+}
+
+@include respond(400px, 600px) {
+	.content-wrapper { padding: 0 15px; }
+	.content-code > pre { padding-left: 15px; padding-right: 15px; }
+}
+
+// @include respond(680px) {
+// 	.content {
+// 		h1, h2, h3, h4, h5, h6,
+// 		p, ul, ol, blockquote, pre, code {
+// 			margin-top: 20px;
+// 			margin-bottom: 20px;
+// 		}
+// 	}
+// }

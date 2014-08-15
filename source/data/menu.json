@@ -1,12 +1,12 @@
 {
-	"home": "#/",
+	"home": "/",
 	"items": [{
 		"key": "projects",
 		"url": "#/projects",
 		"title": "Projects"
 	}, {
 		"key": "articles",
-		"url": "#/articles",
+		"url": "article.html",
 		"title": "Articles"
 	}, {
 		"key": "contribute",

@@ -26,6 +26,8 @@
 // layouts
 @import "layouts/header";
 @import "layouts/footer";
+@import "layouts/article";
 
 // state
+@import "states/is-starting";
 @import "states/is-scroll";
