@@ -14,12 +14,8 @@
 	background-color: darken($site-dark, 0);
 	color: $site-light;
 
-	// box-shadow: 0 0 25px rgba($site-light, 0.25);
-	// border-bottom: 4px solid rgba($site-light, 1);
-
 	transition-property: transform;
 	transition-duration: 0.3s;
-	// transition-delay: 0.25s;
 }
 
 .l-header-wrapper {

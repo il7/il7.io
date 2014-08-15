@@ -264,36 +264,31 @@ strong {
 
 .content p,
 .content ul,
-.content ol,
-.content blockquote {
-	max-width: 840px;
+.content ol {
+	max-width: 800px;
 }
 
 .content p.text-vp-small,
 .content ul.text-vp-small,
-.content ol.text-vp-small,
-.content blockquote.text-vp-small {
-	max-width: 720px;
+.content ol.text-vp-small {
+	max-width: 640px;
 }
 
 .content p.text-vp-medium,
 .content ul.text-vp-medium,
-.content ol.text-vp-medium,
-.content blockquote.text-vp-medium {
-	max-width: 840px;
+.content ol.text-vp-medium {
+	max-width: 880px;
 }
 
 .content p.text-vp-large,
 .content ul.text-vp-large,
-.content ol.text-vp-large,
-.content blockquote.text-vp-large {
+.content ol.text-vp-large {
 	max-width: 960px;
 }
 
 .content p.text-vp-huge,
 .content ul.text-vp-huge,
-.content ol.text-vp-huge,
-.content blockquote.text-vp-huge {
+.content ol.text-vp-huge {
 	max-width: 1120px;
 }
 
@@ -313,6 +308,8 @@ strong {
 .content blockquote {
 	padding-left: 1.5vw;
 	border-left: 0.5vw solid #292623;
+	margin: 1.5vw 0 2.5vw 0;
+	font-style: italic;
 }
 
 .content blockquote > label {

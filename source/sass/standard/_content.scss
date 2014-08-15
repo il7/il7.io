@@ -1,17 +1,9 @@
 .content {
-	& > * { }
-	
-	h1, h2, h3, h4, h5, h6,
-	p, ul, ol, blockquote, pre, code {
-	}
+	p, ul, ol {
+		max-width: 800px;
 
-	p, ul, ol, blockquote, pre, code { }
-
-	p, ul, ol, blockquote {
-		max-width: 840px;
-
-		&.text-vp-small { max-width: 720px; }
-		&.text-vp-medium { max-width: 840px; }
+		&.text-vp-small { max-width: 640px; }
+		&.text-vp-medium { max-width: 880px; }
 		&.text-vp-large { max-width: 960px; }
 		&.text-vp-huge { max-width: 1120px; }
 	}
@@ -24,9 +16,12 @@
 	ol { list-style: lower-roman outside; }
 
 	blockquote {
-		// margin-left: 1.5vw;
 		padding-left: 1.5vw;
 		border-left: 0.5vw solid $site-dark;
+
+		margin: 1.5vw 0 2.5vw 0;
+
+		font-style: italic;
 
 		& > * {}
 		& > label {
