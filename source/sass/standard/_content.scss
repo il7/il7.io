@@ -8,18 +8,14 @@
 		&.text-vp-huge { max-width: 1120px; }
 	}
 
-	ul, ol { 
-		padding-left: 5vw;
-	}
-
+	ul, ol { padding-left: 5vw; }
 	ul { list-style: square outside; }
 	ol { list-style: lower-roman outside; }
 
 	blockquote {
+		margin: 1.5vw 0 2.5vw 0;
 		padding-left: 1.5vw;
 		border-left: 0.5vw solid $site-dark;
-
-		margin: 1.5vw 0 2.5vw 0;
 
 		font-style: italic;
 
@@ -54,8 +50,6 @@
 .content-wrapper {
 	max-width: 1120px;
 	margin: 1vw auto;
-	// padding: 0 20px;
-
 	padding: 0 20px;
 
 	transition-property: padding;
@@ -69,6 +63,9 @@
 }
 
 @include respond(0, 400px) {
+	.content {
+		blockquote { border-left-width: 1px; }
+	}
 	.content-wrapper { padding: 0 10px; }
 	.content-code > pre { padding-left: 10px; padding-right: 10px; }
 }
@@ -78,12 +75,10 @@
 	.content-code > pre { padding-left: 15px; padding-right: 15px; }
 }
 
-// @include respond(680px) {
-// 	.content {
-// 		h1, h2, h3, h4, h5, h6,
-// 		p, ul, ol, blockquote, pre, code {
-// 			margin-top: 20px;
-// 			margin-bottom: 20px;
-// 		}
-// 	}
-// }
+
+@include respond(0, 600px) { 
+	.content {
+		ul, ol { padding-left: 35px; }
+	}
+
+}

@@ -306,9 +306,9 @@ strong {
 }
 
 .content blockquote {
+	margin: 1.5vw 0 2.5vw 0;
 	padding-left: 1.5vw;
 	border-left: 0.5vw solid #292623;
-	margin: 1.5vw 0 2.5vw 0;
 	font-style: italic;
 }
 
@@ -681,6 +681,10 @@ a {
 
 @media only all and (min-width: 0) and (max-width: 399px) {
 
+.content blockquote {
+	border-left-width: 1px;
+}
+
 .content-wrapper {
 	padding: 0 10px;
 }
@@ -714,9 +718,18 @@ a {
 	padding-left: 5px;
 }
 
+.l-footer-copy {
+	padding: 0 5px;
+}
+
 }
 
 @media only all and (min-width: 0) and (max-width: 599px) {
+
+.content ul,
+.content ol {
+	padding-left: 35px;
+}
 
 .logo,
 .logo-icon {
@@ -729,16 +742,12 @@ a {
 }
 
 .l-footer-wrapper {
-	padding: 0;
+	padding: 0 5px;
 }
 
 .l-footer-wrapper > .slice-item {
 	display: block;
 	text-align: left;
-}
-
-.l-footer-copy {
-	padding: 0 10px;
 }
 
 .l-footer {
@@ -785,6 +794,10 @@ a {
 .content-code > pre {
 	padding-left: 15px;
 	padding-right: 15px;
+}
+
+.l-footer-copy {
+	padding: 0 10px;
 }
 
 }

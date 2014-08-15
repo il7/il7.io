@@ -28,7 +28,7 @@
 
 @include respond(0, 600px) {
 	.l-footer-wrapper {
-		padding: 0;
+		padding: 0 5px;
 
 		& > .slice-item {
 			display: block;
@@ -36,9 +36,16 @@
 		}
 	}
 
-	.l-footer-copy { padding: 0 10px; }
-
 	.l-footer {
 		margin: 20px 0;
 	}
+}
+
+
+@include respond(400px, 600px) {
+	.l-footer-copy { padding: 0 10px; }
+}
+
+@include respond(0, 400px) {
+	.l-footer-copy { padding: 0 5px; }
 }
