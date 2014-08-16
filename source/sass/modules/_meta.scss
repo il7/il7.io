@@ -1,0 +1,46 @@
+.meta {
+	& > .slice-item { vertical-align: middle; }
+}
+
+.meta-author {}
+
+.meta-author-image,
+.meta-author-name {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.meta-author-image {
+	border-radius: 100px;
+	margin-right: 10px;
+}
+
+.meta-author-name {
+}
+
+.meta-author-fullname {
+	font-size: 18px;
+	font-family: $font-sans;
+	font-weight: 700;
+	line-height: 1.6em;
+}
+
+.meta-author-handle {
+	position: relative;
+	display: block;
+	margin-top: -8px;
+	font-size: 14px;
+	color: $site-red;
+}
+
+.meta-tags {
+	text-align: right;
+	line-height: 1.8em;
+}
+
+.meta-tags-header {
+	display: inline-block;
+	margin-right: 10px;
+
+	color: $site-yellow;
+}

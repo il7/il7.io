@@ -1,5 +1,6 @@
 .l-header {
 	height: 80px;
+	margin-bottom: 20px;
 	transition-property: height;
 }
 
@@ -16,6 +17,10 @@
 
 	transition-property: transform;
 	transition-duration: 0.3s;
+
+	&:hover {
+		transform: translate3d(0, 0px, 0) !important;
+	}
 }
 
 .l-header-wrapper {

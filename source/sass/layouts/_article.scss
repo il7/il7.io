@@ -1,5 +1,44 @@
 .l-article {
+	position: relative;
 	overflow: hidden;
 
 	transition-property: opacity;
+}
+
+.l-article-meta {
+	max-width: 1120px;
+	margin: 10px auto 30px auto;
+	padding: 0 20px;
+}
+
+.l-article-content {
+	margin-top: -20px;
+
+	a { color: $site-red; }
+	a:hover { color: $site-red; text-decoration: underline; }
+}
+
+@include respond(0, 300px) {
+	.l-article-meta {
+		padding: 0 5px;
+	}
+}
+
+@include respond(300px, 600px) {
+	.l-article-meta {
+		padding: 0 10px;
+	}
+}
+
+
+@include respond(0, 600px) {
+	.l-article-meta {
+		margin-top: 0;
+
+		& > .slice-item { 
+			display: block; 
+			margin-top: 10px;
+			text-align: left; 
+		}
+	}
 }

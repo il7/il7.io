@@ -40,7 +40,6 @@ Seven.DocumentView = (function() {
 	return Tendon.View.extend({ });
 })()
 Seven.HeaderView = (function() {
-
 	return Tendon.View.extend({
 		ui: {
 			mast: '.l-header-mast',

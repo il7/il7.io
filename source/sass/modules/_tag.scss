@@ -1,0 +1,24 @@
+.tag {
+	display: inline-block;
+	padding: 3px 15px;
+
+	font-family: $font-sans;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 1.7em;
+
+	border: 1px solid $site-yellow;
+	border-radius: 100px;
+	
+	background-color: rgba($site-yellow, 0.05);
+	color: $site-yellow;
+
+	&:hover {
+		background-color: rgba($site-yellow, 1);
+		color: $site-light;
+	}
+}
+
+@include respond(0, 600px) {
+	.tag { padding: 1px 10px; }
+}

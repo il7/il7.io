@@ -18,10 +18,13 @@
 @import "standard/input";
 @import "standard/link";
 @import "standard/slice";
+@import "standard/list";
 
 // custom stuff
 @import "modules/logo";
 @import "modules/nav";
+@import "modules/tag";
+@import "modules/meta";
 
 // layouts
 @import "layouts/header";
