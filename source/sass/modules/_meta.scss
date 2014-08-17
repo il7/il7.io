@@ -1,8 +1,12 @@
 .meta {
+	// table-layout: auto;
 	& > .slice-item { vertical-align: middle; }
 }
 
-.meta-author {}
+.meta-author {
+	width: 45%;
+	min-width: 200px;
+}
 
 .meta-author-image,
 .meta-author-name {
@@ -18,6 +22,7 @@
 .meta-author-name {}
 
 .meta-author-fullname {
+	display: block;
 	font-family: $font-sans;
 	font-weight: 700;
 	line-height: 1.6em;
@@ -25,9 +30,12 @@
 
 .meta-author-handle {
 	position: relative;
-	display: block;
-	margin-top: -10px;
+	display: inline-block;
+	margin-top: -8px;
 	color: $site-red;
+	border-bottom: 1px solid transparent;
+
+	&:hover { text-decoration: underline; }
 }
 
 .meta-tags {
@@ -40,4 +48,11 @@
 	margin-right: 10px;
 
 	color: $site-yellow;
+}
+
+@include respond(0, 600px) {
+	.meta-author { 
+		width: 100%;
+		margin-bottom: 5px; 
+	}
 }

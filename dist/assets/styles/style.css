@@ -360,8 +360,8 @@ strong {
 }
 
 .text-vp-small {
-	font-size: 1.74419vw;
-	line-height: 2.96512vw;
+	font-size: 2.09302vw;
+	line-height: 3.55814vw;
 }
 
 .text-vp {
@@ -739,6 +739,11 @@ a {
 	vertical-align: middle;
 }
 
+.meta-author {
+	width: 45%;
+	min-width: 200px;
+}
+
 .meta-author-image,
 .meta-author-name {
 	display: inline-block;
@@ -751,6 +756,7 @@ a {
 }
 
 .meta-author-fullname {
+	display: block;
 	font-family: "pt-sans";
 	font-weight: 700;
 	line-height: 1.6em;
@@ -758,9 +764,14 @@ a {
 
 .meta-author-handle {
 	position: relative;
-	display: block;
-	margin-top: -10px;
+	display: inline-block;
+	margin-top: -8px;
 	color: #ef554f;
+	border-bottom: 1px solid transparent;
+}
+
+.meta-author-handle:hover {
+	text-decoration: underline;
 }
 
 .meta-tags {
@@ -774,18 +785,43 @@ a {
 	color: #f2ca00;
 }
 
+#application {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	width: 100%;
+	-webkit-flex-wrap: nowrap;
+	    -ms-flex-wrap: nowrap;
+	        flex-wrap: nowrap;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+}
+
+#application-header {
+	-webkit-box-flex: 0;
+	-webkit-flex: 0 1 80px;
+	    -ms-flex: 0 1 80px;
+	        flex: 0 1 80px;
+}
+
+#application-article {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1 0 auto;
+	    -ms-flex: 1 0 auto;
+	        flex: 1 0 auto;
+}
+
 .l-header {
 	height: 80px;
-	margin-bottom: 20px;
 	-webkit-transition-property: height;
 	        transition-property: height;
 }
 
 .l-header-mast {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
 	z-index: 1000;
 	background-color: #292623;
 	color: #faf9f5;
@@ -852,7 +888,7 @@ a {
 
 .l-article-meta {
 	max-width: 1120px;
-	margin: 10px auto 30px auto;
+	margin: 30px auto;
 	padding: 0 20px;
 }
 
@@ -872,18 +908,6 @@ a {
 .is-starting * {
 	-webkit-transition: none;
 	        transition: none;
-}
-
-.is-scrolled-up div.l-header-mast {
-	-webkit-transform: translate3d(0, 0px, 0);
-	        transform: translate3d(0, 0px, 0);
-	-webkit-transition-delay: 0s;
-	        transition-delay: 0s;
-}
-
-.is-scrolled-nav .l-header-mast {
-	-webkit-transform: translate3d(0, -164px, 0);
-	        transform: translate3d(0, -164px, 0);
 }
 
 @media only all and (min-width: 0) and (max-width: 399px) {
@@ -925,8 +949,12 @@ a {
 	padding-left: 5px;
 }
 
-.l-footer-copy {
-	padding: 0 5px;
+.l-footer-wrapper {
+	padding: 0 !important;
+}
+
+.l-article-meta {
+	padding: 0 10px;
 }
 
 }
@@ -948,6 +976,11 @@ a {
 	padding: 1px 10px;
 }
 
+.meta-author {
+	width: 100%;
+	margin-bottom: 5px;
+}
+
 .l-header-logo {
 	padding-left: 5px;
 }
@@ -966,12 +999,11 @@ a {
 }
 
 .l-article-meta {
-	margin-top: 0;
+	margin-top: 20px;
 }
 
 .l-article-meta > .slice-item {
 	display: block;
-	margin-top: 10px;
 	text-align: left;
 }
 
@@ -993,7 +1025,13 @@ a {
 }
 
 .nav-item > a {
-	padding: 0 5px !important;
+	padding: 0 10px !important;
+}
+
+#application-header {
+	-webkit-flex-basis: 148px;
+	    -ms-flex-preferred-size: 148px;
+	        flex-basis: 148px;
 }
 
 .l-header-wrapper > .slice-item {
@@ -1004,16 +1042,14 @@ a {
 	text-align: left;
 }
 
-.l-article-meta {
-	padding: 0 5px;
 }
 
-}
+@media only all and (min-width: 300px) and (max-width: 399px) {
 
-@media only all and (min-width: 300px) and (max-width: 599px) {
-
-.l-article-meta {
-	padding: 0 10px;
+#application-header {
+	-webkit-flex-basis: 40px;
+	    -ms-flex-preferred-size: 40px;
+	        flex-basis: 40px;
 }
 
 }
@@ -1029,8 +1065,18 @@ a {
 	padding-right: 15px;
 }
 
+#application-header {
+	-webkit-flex-basis: 50px;
+	    -ms-flex-preferred-size: 50px;
+	        flex-basis: 50px;
+}
+
 .l-footer-copy {
 	padding: 0 10px;
+}
+
+.l-article-meta {
+	padding: 0 15px;
 }
 
 }
@@ -1083,8 +1129,8 @@ h1.text-vp-huge {
 @media only all and (min-width: 860px) and (max-width: 1079px) {
 
 .text-vp-small {
-	font-size: 1.51163vw;
-	line-height: 2.56977vw;
+	font-size: 1.74419vw;
+	line-height: 2.96512vw;
 }
 
 .text-vp {
@@ -1117,8 +1163,8 @@ h1.text-vp-huge {
 @media only all and (min-width: 1080px) {
 
 .text-vp-small {
-	font-size: 16.32558px;
-	line-height: 27.75349px;
+	font-size: 18.83721px;
+	line-height: 32.02326px;
 }
 
 .text-vp {
@@ -1151,8 +1197,8 @@ h1.text-vp-huge {
 @media only all and (max-width: 639px) {
 
 .text-vp-small {
-	font-size: 11.16279px;
-	line-height: 18.97674px;
+	font-size: 13.39535px;
+	line-height: 22.77209px;
 }
 
 .text-vp {

@@ -23,7 +23,7 @@ $vptext-mid: ($vptext-min + $vptext-max) / 2;
 	line-height: #{($font-size * $line-height / $vptext-viewport) * $limit};
 }
 
-.text-vp-small { @include viewport-text(15); }
+.text-vp-small { @include viewport-text(18); }
 .text-vp { @include viewport-text(22); }
 .text-vp-medium { @include viewport-text(28); }
 .text-vp-large { @include viewport-text(36, 1.65); }
@@ -31,7 +31,7 @@ $vptext-mid: ($vptext-min + $vptext-max) / 2;
  
 // min
 @include respond(-1, $vptext-min) {
-	.text-vp-small { @include viewport-text-limit(15, $vptext-min); }
+	.text-vp-small { @include viewport-text-limit(18, $vptext-min); }
 	.text-vp { @include viewport-text-limit(22, $vptext-min); }
 	.text-vp-medium { @include viewport-text-limit(28, $vptext-min); }
 	.text-vp-large { @include viewport-text-limit(36, $vptext-min, 1.6); }
@@ -47,7 +47,7 @@ $vptext-mid: ($vptext-min + $vptext-max) / 2;
 
 // mid-high break
 @include respond($vptext-mid, $vptext-max) {
-	.text-vp-small { @include viewport-text(13); }
+	.text-vp-small { @include viewport-text(15); }
 	.text-vp { @include viewport-text(20); }
 	.text-vp-medium { @include viewport-text(28); }
 	.text-vp-large { @include viewport-text(40, 1.6); }
@@ -57,7 +57,7 @@ $vptext-mid: ($vptext-min + $vptext-max) / 2;
 
 // max
 @include respond($vptext-max) {
-	.text-vp-small { @include viewport-text-limit(13, $vptext-max); }
+	.text-vp-small { @include viewport-text-limit(15, $vptext-max); }
 	.text-vp { @include viewport-text-limit(20, $vptext-max); }
 	.text-vp-medium { @include viewport-text-limit(28, $vptext-max); }
 	.text-vp-large { @include viewport-text-limit(40, $vptext-max, 1.5); }

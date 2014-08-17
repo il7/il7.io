@@ -47,5 +47,5 @@
 }
 
 @include respond(0, 400px) {
-	.l-footer-copy { padding: 0 5px; }
+	.l-footer-wrapper { padding: 0 !important; }
 }
