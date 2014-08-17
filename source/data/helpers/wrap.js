@@ -8,7 +8,7 @@ module.exports.register = function (Handlebars, options)  {
   	type = type || 'p';
 
 	return new Handlebars.SafeString(
-		'<div class="content-wrapper"><' + type + '>'
+		'<div class="content-wrapper" data-type="' + type + '"><' + type + '>'
      		+ opts.fn(this) + 
      	'</' + type + '></div>'
  	);

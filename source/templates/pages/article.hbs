@@ -18,7 +18,7 @@ tags:
 
 {{#wrap-vp "h2" "large"}}Start with the Basics{{/wrap-vp}}
 
-{{#wrap-vp "p" "text-vp-medium"}}The view is probably the most used part of Backbone, it defines the heart of most applications. &nbsp;The basic problem is that the default behavior of a backbone view doesn’t provide practical patterns.{{/wrap-vp}}
+{{#wrap-vp "medium"}}The view is probably the most used part of Backbone, it defines the heart of most applications. &nbsp;The basic problem is that the default behavior of a backbone view doesn’t provide practical patterns.{{/wrap-vp}}
 
 {{#wrap}}This is likely an intentional design decision by the backbone &nbsp;folks, and in concept makes a whole lot of sense, but in practice becomes a nuisance. &nbsp;The simple solution is to define a base view that extends Backbone.View that contains a useful set of functions and hooks. One of the main components of the BaseView is a template renderer, it should run as the view instance initializes.{{/wrap}}
 
@@ -35,7 +35,7 @@ tags:
     ...
 });{{/wrap-code}}
 
-{{#wrap-vp "p" "small"}}This setup searches for a model attached to the view and sends it’s attributes object to a render function, if no model is attached a empty object is sent. &nbsp;The actual render function does nothing but run the template function set in the your view definition. &nbsp;I use a precompiled handlebars templates, but you can use underscore’s _.template function or whatever library you’d like.{{/wrap-vp}}
+{{#wrap-vp "small"}}This setup searches for a model attached to the view and sends it’s attributes object to a render function, if no model is attached a empty object is sent. &nbsp;The actual render function does nothing but run the template function set in the your view definition. &nbsp;I use a precompiled handlebars templates, but you can use underscore’s _.template function or whatever library you’d like.{{/wrap-vp}}
 
 {{#wrap-vp "h3" "medium"}}Hooks and Events{{/wrap-vp}}
 

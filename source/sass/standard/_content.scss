@@ -49,7 +49,7 @@
 
 .content-wrapper {
 	max-width: 1120px;
-	margin: 1vw auto;
+	margin: 2vw auto;
 	padding: 0 20px;
 
 	transition-property: padding;
@@ -57,7 +57,7 @@
 
 .content-code {
 	position: relative;
-	margin: 2vw auto;
+	margin: 2.5vw auto 3vw auto;
 
 	background-color: lighten($site-dark, 2);
 }

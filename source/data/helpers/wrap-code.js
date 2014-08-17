@@ -9,7 +9,7 @@ module.exports.register = function (Handlebars, options)  {
 
 	return new Handlebars.SafeString(
 		'<div class="content-code text-vp-small">' 
-			+ '<pre class="content-wrapper"><code class="' + lang + '">'
+			+ '<pre class="content-wrapper" data-type="code"><code class="' + lang + '">'
 	     		+ opts.fn(this)
 	     	+ '</code></pre>' + 
      	'</div>'

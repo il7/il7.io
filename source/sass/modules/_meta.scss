@@ -15,11 +15,9 @@
 	margin-right: 10px;
 }
 
-.meta-author-name {
-}
+.meta-author-name {}
 
 .meta-author-fullname {
-	font-size: 18px;
 	font-family: $font-sans;
 	font-weight: 700;
 	line-height: 1.6em;
@@ -28,8 +26,7 @@
 .meta-author-handle {
 	position: relative;
 	display: block;
-	margin-top: -8px;
-	font-size: 14px;
+	margin-top: -10px;
 	color: $site-red;
 }
 

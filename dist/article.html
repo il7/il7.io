@@ -63,8 +63,8 @@
         <div class="slice-item meta-author">
             <img class="meta-author-image" src="https://avatars0.githubusercontent.com/u/1424368?v=2&amp;s=48" />
             <div class="meta-author-name">
-                <div class="meta-author-fullname">Evan Krambuhl</div>
-                <a href="https://twitter.com/evan_is" class="meta-author-handle">@evan_is</a>
+                <div class="meta-author-fullname text-vp">Evan Krambuhl</div>
+                <a href="https://twitter.com/evan_is" class="meta-author-handle text-vp-small">@evan_is</a>
             </div>
         </div>
         
@@ -85,17 +85,17 @@
     <article class="l-article-content layout-content content text-vp">
     
 
-<div class="content-wrapper"><h1 class="text-vp-huge" >Mid-Scale</h1></div>
+<div class="content-wrapper" data-type="h1"><h1 class="text-vp-huge">Mid-Scale</h1></div>
 
-<div class="content-wrapper"><p>I find myself working on a lot of websites that have are are moderate in size and have a limited lifespan, so it is important to build out sites quickly with a reusable set of patterns. &nbsp; My set of patterns use Backbone as it provides a very minimal set of objects for MV. &nbsp;I have grown to really like this loosely structured approach, but I quickly find myself repeating code often, bloating even simple applications. Backbone extensions like Marionette and other frameworks like Ember and Angular use a more structured approach to building applications that works well for large scale projects, but are not necessary when the requirements are not lavish. &nbsp;A Goldilocks story with no just right for my situations, but if the right solution doesn’t exist why not build it.</p></div>
+<div class="content-wrapper" data-type="p"><p>I find myself working on a lot of websites that have are are moderate in size and have a limited lifespan, so it is important to build out sites quickly with a reusable set of patterns. &nbsp; My set of patterns use Backbone as it provides a very minimal set of objects for MV. &nbsp;I have grown to really like this loosely structured approach, but I quickly find myself repeating code often, bloating even simple applications. Backbone extensions like Marionette and other frameworks like Ember and Angular use a more structured approach to building applications that works well for large scale projects, but are not necessary when the requirements are not lavish. &nbsp;A Goldilocks story with no just right for my situations, but if the right solution doesn’t exist why not build it.</p></div>
 
-<div class="content-wrapper"><h2 class="text-vp-large" >Start with the Basics</h2></div>
+<div class="content-wrapper" data-type="h2"><h2 class="text-vp-large">Start with the Basics</h2></div>
 
-<div class="content-wrapper"><p class="text-vp-text-vp-medium" >The view is probably the most used part of Backbone, it defines the heart of most applications. &nbsp;The basic problem is that the default behavior of a backbone view doesn’t provide practical patterns.</p></div>
+<div class="content-wrapper" data-type="p"><p class="text-vp-medium">The view is probably the most used part of Backbone, it defines the heart of most applications. &nbsp;The basic problem is that the default behavior of a backbone view doesn’t provide practical patterns.</p></div>
 
-<div class="content-wrapper"><p>This is likely an intentional design decision by the backbone &nbsp;folks, and in concept makes a whole lot of sense, but in practice becomes a nuisance. &nbsp;The simple solution is to define a base view that extends Backbone.View that contains a useful set of functions and hooks. One of the main components of the BaseView is a template renderer, it should run as the view instance initializes.</p></div>
+<div class="content-wrapper" data-type="p"><p>This is likely an intentional design decision by the backbone &nbsp;folks, and in concept makes a whole lot of sense, but in practice becomes a nuisance. &nbsp;The simple solution is to define a base view that extends Backbone.View that contains a useful set of functions and hooks. One of the main components of the BaseView is a template renderer, it should run as the view instance initializes.</p></div>
 
-<div class="content-code text-vp-small"><pre class="content-wrapper"><code class="language-javascript">var BaseView = Backbone.View.extend({
+<div class="content-code text-vp-small"><pre class="content-wrapper" data-type="code"><code class="language-javascript">var BaseView = Backbone.View.extend({
     initialize: function(options) {
         this.render(this.model &amp;&amp; this.model.attributes ? this.model.attributes : {});
     },
@@ -108,13 +108,13 @@
     ...
 });</code></pre></div>
 
-<div class="content-wrapper"><p class="text-vp-small" >This setup searches for a model attached to the view and sends it’s attributes object to a render function, if no model is attached a empty object is sent. &nbsp;The actual render function does nothing but run the template function set in the your view definition. &nbsp;I use a precompiled handlebars templates, but you can use underscore’s _.template function or whatever library you’d like.</p></div>
+<div class="content-wrapper" data-type="p"><p class="text-vp-small">This setup searches for a model attached to the view and sends it’s attributes object to a render function, if no model is attached a empty object is sent. &nbsp;The actual render function does nothing but run the template function set in the your view definition. &nbsp;I use a precompiled handlebars templates, but you can use underscore’s _.template function or whatever library you’d like.</p></div>
 
-<div class="content-wrapper"><h3 class="text-vp-medium" >Hooks and Events</h3></div>
+<div class="content-wrapper" data-type="h3"><h3 class="text-vp-medium">Hooks and Events</h3></div>
 
-<div class="content-wrapper"><p>The rendering of views that use the BaseView object is now automatic but if you override the initialize function the render function will not run automatically. &nbsp;You _could_&nbsp;run the prototype.initialize&nbsp;function, but that quickly becomes a hassle. The better solution is to add a few hooks into the BaseView.</p></div>
+<div class="content-wrapper" data-type="p"><p>The rendering of views that use the BaseView object is now automatic but if you override the initialize function the render function will not run automatically. &nbsp;You _could_&nbsp;run the prototype.initialize&nbsp;function, but that quickly becomes a hassle. The better solution is to add a few hooks into the BaseView.</p></div>
 
-<div class="content-code text-vp-small"><pre class="content-wrapper"><code class="language-javascript">var BaseView = Backbone.View.extend({
+<div class="content-code text-vp-small"><pre class="content-wrapper" data-type="code"><code class="language-javascript">var BaseView = Backbone.View.extend({
     initialize: function(options) {
         this.render(this.model &amp;&amp; this.model.attributes ? this.model.attributes : {});
         if (_.isFunction(this.onRender)) {
@@ -129,30 +129,30 @@
     }
 });</code></pre></div>
 
-<div class="content-wrapper"><p>The most used and most versatile object in backbone is the view object. &nbsp;Views can be extended into controllers, collection views, My set of patterns use Backbone and are designed with a nod to Derick Bailey’s Marionette.</p></div>
+<div class="content-wrapper" data-type="p"><p>The most used and most versatile object in backbone is the view object. &nbsp;Views can be extended into controllers, collection views, My set of patterns use Backbone and are designed with a nod to Derick Bailey’s Marionette.</p></div>
 
-<div class="content-wrapper"><ul>
+<div class="content-wrapper" data-type="ul"><ul>
     <li>Apple</li>
     <li>Peanut</li>
     <li>Rice</li>
     <li>Unicorn Tears</li>
 </ul></div>
 
-<div class="content-wrapper"><h4 class="text-vp-medium" >You wanna know how I got them?</h4></div>
+<div class="content-wrapper" data-type="h4"><h4 class="text-vp-medium">You wanna know how I got them?</h4></div>
 
-<div class="content-wrapper"><p>So I had a wife. She was beautiful, like you, who tells me I worry too much, who tells me I ought to smile more, who gambles and gets in deep with the sharks. Hey. One day they carve her face. And we have no money for surgeries. She can't take it. I just wanna see her smile again. I just want her to know that I don't care about the scars. So, I do this to myself. And you know what? She can't stand the sight of me. She leaves. Now I see the funny side. Now I'm always smiling.</p></div>
+<div class="content-wrapper" data-type="p"><p>So I had a wife. She was beautiful, like you, who tells me I worry too much, who tells me I ought to smile more, who gambles and gets in deep with the sharks. Hey. One day they carve her face. And we have no money for surgeries. She can't take it. I just wanna see her smile again. I just want her to know that I don't care about the scars. So, I do this to myself. And you know what? She can't stand the sight of me. She leaves. Now I see the funny side. Now I'm always smiling.</p></div>
 
 
-<div class="content-wrapper"><ol>
+<div class="content-wrapper" data-type="ol"><ol>
     <li>Item #1</li>
     <li>Item #2</li>
     <li>Item #3</li>
     <li>Item #4</li>
 </ol></div>
 
-<div class="content-wrapper"><p>The most used and most versatile object in backbone is the view object. &nbsp;Views can be extended into controllers, collection views, My set of patterns use Backbone and are designed with a nod to Derick Bailey’s Marionette.</p></div>
+<div class="content-wrapper" data-type="p"><p>The most used and most versatile object in backbone is the view object. &nbsp;Views can be extended into controllers, collection views, My set of patterns use Backbone and are designed with a nod to Derick Bailey’s Marionette.</p></div>
 
-<div class="content-wrapper"><p>So I had a wife. She was beautiful, like you, who tells me I worry too much, who tells me I ought to smile more, who gambles and gets in deep with the sharks. Hey. One day they carve her face. And we have no money for surgeries. She can't take it. I just wanna see her smile again. I just want her to know that I don't care about the scars. So, I do this to myself. And you know what? She can't stand the sight of me. She leaves. Now I see the funny side. Now I'm always smiling.</p></div>
+<div class="content-wrapper" data-type="p"><p>So I had a wife. She was beautiful, like you, who tells me I worry too much, who tells me I ought to smile more, who gambles and gets in deep with the sharks. Hey. One day they carve her face. And we have no money for surgeries. She can't take it. I just wanna see her smile again. I just want her to know that I don't care about the scars. So, I do this to myself. And you know what? She can't stand the sight of me. She leaves. Now I see the funny side. Now I'm always smiling.</p></div>
 
     </article>
 </section>
