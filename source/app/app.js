@@ -1,5 +1,7 @@
 var Seven = function() { return; };
 
+//=include('vendor/prism.js')
+
 //=include('views/window.js')
 //=include('views/document.js')
 //=include('views/header.js')

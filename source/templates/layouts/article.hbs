@@ -1,0 +1,30 @@
+{{>html-head}}
+<div id="application">
+{{>header}}
+<section class="l-article">
+    <aside class="l-article-meta slice meta">
+        <div class="slice-item meta-author">
+            <img class="meta-author-image" src="{{twitter.image}}" />
+            <div class="meta-author-name">
+                <div class="meta-author-fullname">{{author}}</div>
+                <a href="{{twitter.url}}" class="meta-author-handle">@{{twitter.username}}</a>
+            </div>
+        </div>
+        
+        <div class="slice-item meta-tags">
+            <h3 class="text-vp meta-tags-header">Tags</h3>
+            <ul class="list-inline">
+            {{#each tags}}
+                <li><a class="tag" href="#/tags/{{lowercase tag}}">{{tag}}</a></li>
+            {{/each}}
+            </ul>
+        </div>
+    </aside>
+
+    <article class="l-article-content layout-content content text-vp">
+    {{>body}}
+    </article>
+</section>
+{{>footer}}
+</div>
+{{>html-foot}}

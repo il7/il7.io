@@ -32,7 +32,8 @@ module.exports = function(grunt) {
                 layout: 'main.hbs',
                 data: ['source/data/**/*.json'],
                 pkg: '<%= pkg %>',
-                iconizr: 'dist/svg/iconizr-fragment.html'
+                iconizr: 'dist/svg/iconizr-fragment.html',
+                helpers: ['source/data/helpers/**/*.js']
             },
 
             pages: {

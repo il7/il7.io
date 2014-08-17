@@ -8,7 +8,7 @@ Seven.ArticleView = (function() {
 		excluded: ['.content-code'],
 
 		onRender: function() {
-			this.setupWraps();
+			// this.setupWraps();
 		},
 
 		setupWraps: function() {
