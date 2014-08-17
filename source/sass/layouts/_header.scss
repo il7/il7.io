@@ -1,13 +1,14 @@
+
 .l-header {
 	height: 80px;
 	transition-property: height;
 }
 
 .l-header-mast {
-	// position: fixed;
-	// top: 0;
-	// left: 0;
-	// right: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
 
 	z-index: 1000;
 

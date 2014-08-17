@@ -792,6 +792,10 @@ a {
 }
 
 .l-header-mast {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
 	z-index: 1000;
 	background-color: #292623;
 	color: #faf9f5;
@@ -878,6 +882,16 @@ a {
 .is-starting * {
 	-webkit-transition: none;
 	        transition: none;
+}
+
+.is-scrolled-up div.l-header-mast {
+	-webkit-transform: translate3d(0, 0px, 0);
+	        transform: translate3d(0, 0px, 0);
+}
+
+.is-scrolled-nav .l-header-mast {
+	-webkit-transform: translate3d(0, -164px, 0);
+	        transform: translate3d(0, -164px, 0);
 }
 
 @media only all and (min-width: 0) and (max-width: 399px) {

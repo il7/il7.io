@@ -2,8 +2,7 @@
 
 .is-scrolled-up {
 	div.l-header-mast { // up specificity
-		// transform: translate3d(0, 0px, 0);
-		// transition-delay: 0s;
+		transform: translate3d(0, 0px, 0);
 	}
 }
 
@@ -12,6 +11,6 @@
 .is-scrolled {}
 .is-scrolled-nav {
 	.l-header-mast {
-		// transform: translate3d(0, -164px, 0);
+		transform: translate3d(0, -164px, 0);
 	}
 }
