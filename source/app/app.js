@@ -13,14 +13,16 @@ Seven.ApplicationView = (function() {
 		ui: {
 			header: '.l-header',
 			footer: '.l-footer',
-
+			appheader: '#application-header',
+			appcontent: '#application-content',
+			appfooter: '#application-content',
 			article: '.l-article'
 		},
 
 		onRender: function() {
+			this.header = new Seven.HeaderView({ el: this.ui.header });
 			this.window = new Seven.WindowView({ el: window });
 			this.document = new Seven.DocumentView({ el: document });
-			this.header = new Seven.HeaderView({ el: this.ui.header });
 
 			this.setup();
 			this.setupPage();

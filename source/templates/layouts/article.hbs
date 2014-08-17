@@ -1,8 +1,8 @@
 {{>html-head}}
-<div id="application">
-<div id="application-header">{{>header}}</div>
 
-<div id="application-article">
+<div id="application">
+{{>header}}
+
 <section class="l-article">
     <aside class="l-article-meta slice meta">
         <div class="slice-item meta-author">
@@ -27,7 +27,8 @@
     {{>body}}
     </article>
 </section>
+
+{{>footer}}
 </div>
-<div id="application-footer">{{>footer}}</div>
-</div>
+
 {{>html-foot}}

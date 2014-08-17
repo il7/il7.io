@@ -1,8 +1,16 @@
 Seven.WindowView = (function() {
 	return Tendon.View.extend({
 		events: {
-			'resize': 'updateScroll',
-			'scroll': 'updateScroll'
+			'resize': 'onResize',
+			'scroll': 'onScroll'
+		},
+
+		onResize: function() {
+			this.updateScroll();
+		},
+
+		onScroll: function() {
+			this.updateScroll();
 		},
 
 		updateScroll: function() {
