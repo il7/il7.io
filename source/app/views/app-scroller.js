@@ -53,8 +53,8 @@ Seven.AppScrollerView = (function() {
 			this.scroll.refresh();
 
 			this.timer = _.delay(function() {
-				this.app.vein.trigger('scroll:longstop', this.pos);
-			}, 1000);
+				this.app.vein.trigger('scroll:longstop', self.pos);
+			}, 600);
 		},
 
 		updateScroll: _.throttle(function() {

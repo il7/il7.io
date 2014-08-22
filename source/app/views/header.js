@@ -26,7 +26,6 @@ Seven.HeaderView = (function() {
 			if (this.lastHeight !== this.height) {
 				this.lastHeight = this.height;
 				
-				// this.$el.css('height', this.height);
 				this.app.vein.trigger('header:resize', this.height);
 
 				clearTimeout(this.timer);
@@ -44,14 +43,23 @@ Seven.HeaderView = (function() {
 			}, this);
 
 			this.app.vein.on('scroll:longstop', function(pos) {
-				var expanded = (this.direction == 'down');
-				this.offset = expanded && (pos > this.height / 4 * 3) ? this.offsetMax : 0;
+				var pastNav = (pos > this.height / 4 * 3);
+				var pastCenter = (this.offset > this.offsetMax / 2);
+
+				this.offset = pastNav && pastCenter ? this.offsetMax : 0;
 				this.ui.mast.transition({ y: -1 * this.offset }, 500);
 			}, this);
 		},
 
 		updateOffset: function(delta) {
-			this.offset += delta / 3;
+			var isNeg = delta < 0 ? true : false;
+
+			delta = Math.abs(delta) / 10;
+			delta = delta < 1 ? 1 : delta;
+			delta = delta > 10 ? 10 : delta;
+			delta = isNeg ? delta * -1 : delta;
+
+			this.offset += delta;
 			this.offset = (this.offset > this.offsetMax) ? this.offsetMax : this.offset;
 			this.offset = (this.offset < 0) ? 0 : this.offset;
 			this.offset = Math.ceil(this.offset);
