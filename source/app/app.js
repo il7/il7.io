@@ -4,6 +4,7 @@ var Seven = function() { return; };
 
 //=include('views/window.js')
 //=include('views/document.js')
+//=include('views/app-scroller.js')
 //=include('views/header.js')
 //=include('views/article.js')
 
@@ -13,9 +14,7 @@ Seven.ApplicationView = (function() {
 		ui: {
 			header: '.l-header',
 			footer: '.l-footer',
-			appheader: '#application-header',
-			appcontent: '#application-content',
-			appfooter: '#application-content',
+			content: '#application-content',
 			article: '.l-article'
 		},
 
@@ -23,6 +22,7 @@ Seven.ApplicationView = (function() {
 			this.header = new Seven.HeaderView({ el: this.ui.header });
 			this.window = new Seven.WindowView({ el: window });
 			this.document = new Seven.DocumentView({ el: document });
+			this.scroller = new Seven.AppScrollerView({ el: this.ui.content });
 
 			this.setup();
 			this.setupPage();

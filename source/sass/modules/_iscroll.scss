@@ -1,0 +1,17 @@
+.iScrollVerticalScrollbar {
+    position: absolute;
+    z-index: 9999;
+    width: 4px;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.iScrollIndicator {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: $site-dark;
+    border-left: 2px solid $site-bg;
+}

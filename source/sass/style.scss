@@ -22,14 +22,15 @@
 @import "standard/list";
 
 // custom stuff
+@import "modules/iscroll";
 @import "modules/logo";
 @import "modules/nav";
 @import "modules/tag";
 @import "modules/meta";
 
 // layouts
+@import "layouts/application";
 @import "layouts/header";
-@import "layouts/footer";
 @import "layouts/article";
 
 // state
