@@ -1,16 +1,26 @@
-.is-scrolling {}
+// .is-scrolling {}
 
-.is-scrolled-up {
-	div.l-header-mast { // up specificity
-		transform: translate3d(0, 0px, 0);
-	}
-}
+// .is-scrolled-up {
+// 	div.l-header-mast { // up specificity
+// 		transform: translate3d(0, 0px, 0);
+// 		transition-delay: 0s;
+// 		transition-duration: 0.4s;
+// 	}
+// }
 
-.is-scrolled-down {}
+// .is-scrolled-down {}
 
-.is-scrolled {}
-.is-scrolled-nav {
-	.l-header-mast {
-		transform: translate3d(0, -164px, 0);
-	}
-}
+// .is-scrolled {}
+// .is-scrolled-nav {
+// 	.l-header-mast {
+// 		transform: translate3d(0, -80px, 0);
+// 	}
+// }
+
+// @include respond(0, 300px) {
+// 	.is-scrolled-nav {
+// 		.l-header-mast {
+// 			transform: translate3d(0, -164px, 0);
+// 		}
+// 	}
+// }

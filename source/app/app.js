@@ -19,22 +19,35 @@ Seven.ApplicationView = (function() {
 		},
 
 		onRender: function() {
-			this.header = new Seven.HeaderView({ el: this.ui.header });
-			this.window = new Seven.WindowView({ el: window });
 			this.document = new Seven.DocumentView({ el: document });
 			this.scroller = new Seven.AppScrollerView({ el: this.ui.content });
+			
+			this.header = new Seven.HeaderView({ el: this.ui.header });
 
 			this.setup();
 			this.setupPage();
+			this.setupResize();
 		},
 
 		setup: function() {
 			var self = this;
 			self.state('starting', true);
 
+			_.defer(function() {
+				self.vein.trigger('resize');
+			});
+
 			_.delay(function() {
 				self.state('starting', false);
 			}, 500);
+		},
+
+		setupResize: function() {
+			$(window).on('resize', _.throttle(_.bind(this.onResize, this), 100));
+		},
+
+		onResize: function() {
+			this.vein.trigger('resize');
 		},
 
 		setupPage: function() {

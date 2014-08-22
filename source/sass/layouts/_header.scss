@@ -1,6 +1,4 @@
-
 .l-header {
-	height: 80px;
 	transition-property: height;
 }
 
@@ -14,13 +12,6 @@
 
 	background-color: $site-dark;
 	color: $site-light;
-
-	transition-property: transform;
-	transition-duration: 0.3s;
-
-	&:hover {
-		transform: translate3d(0, 0px, 0) !important;
-	}
 }
 
 .l-header-wrapper {
@@ -63,6 +54,10 @@
 }
 
 @include respond(0, 600px) {
+	.l-header-mast {
+		transition-duration: 0.4s;
+	}
+
 	.l-header-logo {
 		padding-left: 5px;
 	}

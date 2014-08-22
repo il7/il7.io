@@ -577,13 +577,105 @@ Seven.DocumentView = (function() {
 Seven.AppScrollerView = (function() {
 	return Tendon.View.extend({
 		onRender: function() {
+			this.app = window.app;
+
 			this.setupIScroll();
+			this.setupListeners();
+		},
+
+		setupListeners: function() {
+			var self = this;
+			this.app.vein.on('header:resize', function(height) {
+				this.$el.css('height', window.innerHeight)
+					.children().eq(0).css('padding-top', height);
+
+				this.navHeight = height;
+
+				_.defer(function() {
+					self.scroll.refresh();
+				});
+			}, this);
 		},
 
 		setupIScroll: function() {
-			this.scroll = new IScroll('#application-content', {
+			var self = this;
+
+			this.lastPos = 0;
+			this.scroll = new IScroll(this.$el.selector, {
+			    eventPassthrough: 'horizontal',
+			    scrollbars: 'custom',
 			    mouseWheel: true,
-			    scrollbars: 'custom'
+			    probeType: 3
+			});
+
+			this.scroll.on('scrollStart', _.bind(this.startScroll, this));
+			this.scroll.on('scroll', _.bind(this.updateScroll, this));
+			this.scroll.on('scrollEnd', _.bind(this.endScroll, this));
+		},
+
+		startScroll: function() {
+			this.app.state('scrolling', true);
+			this.app.vein.trigger('scroll:start', this.pos);
+			this.updateScrollDirection();
+			this.scroll.refresh();
+			clearTimeout(this.timer);
+		},
+
+		endScroll: function() {
+			var self = this;
+
+			this.app.state('scrolling', false);
+			this.app.vein.trigger('scroll:stop', this.pos);
+			this.scroll.refresh();
+
+			this.timer = _.delay(function() {
+				this.app.vein.trigger('scroll:longstop', this.pos);
+			}, 1000);
+		},
+
+		updateScroll: _.throttle(function() {
+			this.pos = -1 * this.scroll.y;
+
+			this.app.vein.trigger('scroll:scrolling', this.pos);
+
+			this.updateScrollState();
+			this.updateScrollNav();
+			this.updateScrollDirection();
+
+			this.lastPos = this.pos;
+		}, 10),
+
+		updateScrollState: function() {
+			if (this.pos > 0) {
+				this.vein.trigger('scrolled', this.pos);
+				this.app.state('scrolled', true);
+			} else {
+				this.app.state('scrolled', false);
+			}
+		},
+
+		updateScrollNav: function() {
+			if (this.pos > this.navHeight / 4 * 3) {
+				this.app.state('scrolled-nav', true);
+			} else {
+				this.app.state('scrolled-nav', false);
+			}
+		},
+
+		updateScrollDirection: function() {	
+			var dir = this.pos < this.lastPos ? 'up' : 'down';
+			
+			if (this.dir !== dir) {
+				this.dir = dir;
+				this.app.state('scrolled-up', this.pos < this.lastPos);
+				this.app.state('scrolled-down', this.pos > this.lastPos);
+			}
+
+			this.app.vein.trigger('scroll:' + dir, this.pos, {
+				direction: dir,
+				pos: this.pos,
+				lastpos: this.lastPos,
+				delta: this.pos - this.lastPos
 			});
 		},
 	});
@@ -598,25 +690,53 @@ Seven.HeaderView = (function() {
 		},
 		
 		onRender: function() {
+			this.app = window.app;
+
+			this.lastHeight = 0;
+			
 			this.setupResize();
+			this.setupScroll();
 		},
 
 		setupResize: function() {
-			$(window).on('resize', { self: this }, 
-				_.throttle(this.onResize, 250)
-			).trigger('resize');
+			this.app.vein.on('resize', _.throttle(_.bind(this.onResize, this), 100));
 		},
 
-		onResize: function(ev) {
-			var self = ev.data.self;
+		onResize: function() {
+			this.offsetMax = this.height = this.ui.wrapper.height();
 
-			self.height = self.ui.wrapper.height();
-			self.$el.css('height', self.height);
+			if (this.lastHeight !== this.height) {
+				this.lastHeight = this.height;
+				
+				// this.$el.css('height', this.height);
+				this.app.vein.trigger('header:resize', this.height);
 
-			clearTimeout(this.timer);
-			this.timer = _.delay(function() {
-				self.onResize(ev);
-			}, 250);
+				clearTimeout(this.timer);
+				this.timer = _.delay(_.bind(this.onResize, this), 100);
+			}
+		},
+
+		setupScroll: function() {
+			this.offset = 0;
+			this.app.vein.on('scroll:up scroll:down', function(pos, opts) {
+				this.direction = opts.direction;
+				this.updateOffset(_.isNaN(opts.delta) ? 0 : opts.delta);
+				this.offset = pos > this.height / 4 * 3 ? this.offset : 0;
+				this.ui.mast.css('transform', 'translate(0, -' +  this.offset + 'px, 0)');
+			}, this);
+
+			this.app.vein.on('scroll:longstop', function(pos) {
+				var expanded = (this.direction == 'down');
+				this.offset = expanded && (pos > this.height / 4 * 3) ? this.offsetMax : 0;
+				this.ui.mast.transition({ y: -1 * this.offset }, 500);
+			}, this);
+		},
+
+		updateOffset: function(delta) {
+			this.offset += delta / 3;
+			this.offset = (this.offset > this.offsetMax) ? this.offsetMax : this.offset;
+			this.offset = (this.offset < 0) ? 0 : this.offset;
+			this.offset = Math.ceil(this.offset);
 		}
 	});
 })()
@@ -658,22 +778,35 @@ Seven.ApplicationView = (function() {
 		},
 
 		onRender: function() {
-			this.header = new Seven.HeaderView({ el: this.ui.header });
-			this.window = new Seven.WindowView({ el: window });
 			this.document = new Seven.DocumentView({ el: document });
 			this.scroller = new Seven.AppScrollerView({ el: this.ui.content });
+			
+			this.header = new Seven.HeaderView({ el: this.ui.header });
 
 			this.setup();
 			this.setupPage();
+			this.setupResize();
 		},
 
 		setup: function() {
 			var self = this;
 			self.state('starting', true);
 
+			_.defer(function() {
+				self.vein.trigger('resize');
+			});
+
 			_.delay(function() {
 				self.state('starting', false);
 			}, 500);
+		},
+
+		setupResize: function() {
+			$(window).on('resize', _.throttle(_.bind(this.onResize, this), 100));
+		},
+
+		onResize: function() {
+			this.vein.trigger('resize');
 		},
 
 		setupPage: function() {
@@ -688,4 +821,4 @@ $(function() {
 	window.app = new Seven.ApplicationView();
 });
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmpzIiwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZXMiOlsiYXBwLmpzIl0sInNvdXJjZXNDb250ZW50IjpbInZhciBTZXZlbiA9IGZ1bmN0aW9uKCkgeyByZXR1cm47IH07XG5cbi8vPWluY2x1ZGUoJ3ZlbmRvci9wcmlzbS5qcycpXG5cbi8vPWluY2x1ZGUoJ3ZpZXdzL3dpbmRvdy5qcycpXG4vLz1pbmNsdWRlKCd2aWV3cy9kb2N1bWVudC5qcycpXG4vLz1pbmNsdWRlKCd2aWV3cy9hcHAtc2Nyb2xsZXIuanMnKVxuLy89aW5jbHVkZSgndmlld3MvaGVhZGVyLmpzJylcbi8vPWluY2x1ZGUoJ3ZpZXdzL2FydGljbGUuanMnKVxuXG5TZXZlbi5BcHBsaWNhdGlvblZpZXcgPSAoZnVuY3Rpb24oKSB7XG5cdHJldHVybiBUZW5kb24uVmlldy5leHRlbmQoe1xuXHRcdGVsOiAnI2FwcGxpY2F0aW9uJyxcblx0XHR1aToge1xuXHRcdFx0aGVhZGVyOiAnLmwtaGVhZGVyJyxcblx0XHRcdGZvb3RlcjogJy5sLWZvb3RlcicsXG5cdFx0XHRjb250ZW50OiAnI2FwcGxpY2F0aW9uLWNvbnRlbnQnLFxuXHRcdFx0YXJ0aWNsZTogJy5sLWFydGljbGUnXG5cdFx0fSxcblxuXHRcdG9uUmVuZGVyOiBmdW5jdGlvbigpIHtcblx0XHRcdHRoaXMuaGVhZGVyID0gbmV3IFNldmVuLkhlYWRlclZpZXcoeyBlbDogdGhpcy51aS5oZWFkZXIgfSk7XG5cdFx0XHR0aGlzLndpbmRvdyA9IG5ldyBTZXZlbi5XaW5kb3dWaWV3KHsgZWw6IHdpbmRvdyB9KTtcblx0XHRcdHRoaXMuZG9jdW1lbnQgPSBuZXcgU2V2ZW4uRG9jdW1lbnRWaWV3KHsgZWw6IGRvY3VtZW50IH0pO1xuXHRcdFx0dGhpcy5zY3JvbGxlciA9IG5ldyBTZXZlbi5BcHBTY3JvbGxlclZpZXcoeyBlbDogdGhpcy51aS5jb250ZW50IH0pO1xuXG5cdFx0XHR0aGlzLnNldHVwKCk7XG5cdFx0XHR0aGlzLnNldHVwUGFnZSgpO1xuXHRcdH0sXG5cblx0XHRzZXR1cDogZnVuY3Rpb24oKSB7XG5cdFx0XHR2YXIgc2VsZiA9IHRoaXM7XG5cdFx0XHRzZWxmLnN0YXRlKCdzdGFydGluZycsIHRydWUpO1xuXG5cdFx0XHRfLmRlbGF5KGZ1bmN0aW9uKCkge1xuXHRcdFx0XHRzZWxmLnN0YXRlKCdzdGFydGluZycsIGZhbHNlKTtcblx0XHRcdH0sIDUwMCk7XG5cdFx0fSxcblxuXHRcdHNldHVwUGFnZTogZnVuY3Rpb24oKSB7XG5cdFx0XHRpZiAodGhpcy51aS5hcnRpY2xlLmxlbmd0aCA+IDApIHtcblx0XHRcdFx0dGhpcy5hcnRpY2xlID0gbmV3IFNldmVuLkFydGljbGVWaWV3KHsgZWw6IHRoaXMudWkuYXJ0aWNsZSB9KTtcblx0XHRcdH1cblx0XHR9XG5cdH0pO1xufSkoKVxuXG4vLz1pbmNsdWRlKCdzdGFydHVwLmpzJykiXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmpzIiwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZXMiOlsiYXBwLmpzIl0sInNvdXJjZXNDb250ZW50IjpbInZhciBTZXZlbiA9IGZ1bmN0aW9uKCkgeyByZXR1cm47IH07XG5cbi8vPWluY2x1ZGUoJ3ZlbmRvci9wcmlzbS5qcycpXG5cbi8vPWluY2x1ZGUoJ3ZpZXdzL3dpbmRvdy5qcycpXG4vLz1pbmNsdWRlKCd2aWV3cy9kb2N1bWVudC5qcycpXG4vLz1pbmNsdWRlKCd2aWV3cy9hcHAtc2Nyb2xsZXIuanMnKVxuLy89aW5jbHVkZSgndmlld3MvaGVhZGVyLmpzJylcbi8vPWluY2x1ZGUoJ3ZpZXdzL2FydGljbGUuanMnKVxuXG5TZXZlbi5BcHBsaWNhdGlvblZpZXcgPSAoZnVuY3Rpb24oKSB7XG5cdHJldHVybiBUZW5kb24uVmlldy5leHRlbmQoe1xuXHRcdGVsOiAnI2FwcGxpY2F0aW9uJyxcblx0XHR1aToge1xuXHRcdFx0aGVhZGVyOiAnLmwtaGVhZGVyJyxcblx0XHRcdGZvb3RlcjogJy5sLWZvb3RlcicsXG5cdFx0XHRjb250ZW50OiAnI2FwcGxpY2F0aW9uLWNvbnRlbnQnLFxuXHRcdFx0YXJ0aWNsZTogJy5sLWFydGljbGUnXG5cdFx0fSxcblxuXHRcdG9uUmVuZGVyOiBmdW5jdGlvbigpIHtcblx0XHRcdHRoaXMuZG9jdW1lbnQgPSBuZXcgU2V2ZW4uRG9jdW1lbnRWaWV3KHsgZWw6IGRvY3VtZW50IH0pO1xuXHRcdFx0dGhpcy5zY3JvbGxlciA9IG5ldyBTZXZlbi5BcHBTY3JvbGxlclZpZXcoeyBlbDogdGhpcy51aS5jb250ZW50IH0pO1xuXHRcdFx0XG5cdFx0XHR0aGlzLmhlYWRlciA9IG5ldyBTZXZlbi5IZWFkZXJWaWV3KHsgZWw6IHRoaXMudWkuaGVhZGVyIH0pO1xuXG5cdFx0XHR0aGlzLnNldHVwKCk7XG5cdFx0XHR0aGlzLnNldHVwUGFnZSgpO1xuXHRcdFx0dGhpcy5zZXR1cFJlc2l6ZSgpO1xuXHRcdH0sXG5cblx0XHRzZXR1cDogZnVuY3Rpb24oKSB7XG5cdFx0XHR2YXIgc2VsZiA9IHRoaXM7XG5cdFx0XHRzZWxmLnN0YXRlKCdzdGFydGluZycsIHRydWUpO1xuXG5cdFx0XHRfLmRlZmVyKGZ1bmN0aW9uKCkge1xuXHRcdFx0XHRzZWxmLnZlaW4udHJpZ2dlcigncmVzaXplJyk7XG5cdFx0XHR9KTtcblxuXHRcdFx0Xy5kZWxheShmdW5jdGlvbigpIHtcblx0XHRcdFx0c2VsZi5zdGF0ZSgnc3RhcnRpbmcnLCBmYWxzZSk7XG5cdFx0XHR9LCA1MDApO1xuXHRcdH0sXG5cblx0XHRzZXR1cFJlc2l6ZTogZnVuY3Rpb24oKSB7XG5cdFx0XHQkKHdpbmRvdykub24oJ3Jlc2l6ZScsIF8udGhyb3R0bGUoXy5iaW5kKHRoaXMub25SZXNpemUsIHRoaXMpLCAxMDApKTtcblx0XHR9LFxuXG5cdFx0b25SZXNpemU6IGZ1bmN0aW9uKCkge1xuXHRcdFx0dGhpcy52ZWluLnRyaWdnZXIoJ3Jlc2l6ZScpO1xuXHRcdH0sXG5cblx0XHRzZXR1cFBhZ2U6IGZ1bmN0aW9uKCkge1xuXHRcdFx0aWYgKHRoaXMudWkuYXJ0aWNsZS5sZW5ndGggPiAwKSB7XG5cdFx0XHRcdHRoaXMuYXJ0aWNsZSA9IG5ldyBTZXZlbi5BcnRpY2xlVmlldyh7IGVsOiB0aGlzLnVpLmFydGljbGUgfSk7XG5cdFx0XHR9XG5cdFx0fVxuXHR9KTtcbn0pKClcblxuLy89aW5jbHVkZSgnc3RhcnR1cC5qcycpIl0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9

@@ -132,7 +132,6 @@ gulp.task('app', function() {
 //  - uglify
 //  ==> output `lib.min.js
 gulp.task('lib', function() {
-  console.log(bowerFiles);
   return gulp.src(bowerFiles.js)
     .pipe(concat('lib.js'))
     .pipe(gulp.dest(dir.scripts))
