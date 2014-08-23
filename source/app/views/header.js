@@ -35,7 +35,7 @@ Seven.HeaderView = (function() {
 
 		setupScroll: function() {
 			this.offset = 0;
-			
+
 			this.app.vein.on('scroll:up scroll:down', function(pos, opts) {
 				var isPastNav = pos > this.height / 4 * 3;
 
@@ -44,7 +44,7 @@ Seven.HeaderView = (function() {
 				this.ui.mast.css('transform', 'translate(0, -' +  this.offset + 'px, 0)');
 			}, this);
 
-			this.app.vein.on('scroll:longstop', function(pos) {
+			this.app.vein.on('scroll:deferstop', function(pos) {
 				var isPastNav = pos > this.height / 4 * 3;
 				var isPastCenter = this.offset > this.offsetMax / 2 ;
 
@@ -61,7 +61,7 @@ Seven.HeaderView = (function() {
 
 			delta = Math.abs(delta) / 10;
 			delta = delta < 1 ? 1 : delta;
-			delta = delta > 10 ? 10 : delta;
+			delta = delta > 15 ? 15 : delta;
 			delta = isNeg ? delta * -1 : delta;
 
 			this.offset += delta;

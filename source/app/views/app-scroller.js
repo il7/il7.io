@@ -49,9 +49,9 @@ Seven.AppScrollerView = (function() {
 			this.app.state('scrolling', false);
 			this.app.vein.trigger('scroll:stop', this.pos);
 
-			this.timer = _.delay(_.bind(function() {
-				this.app.vein.trigger('scroll:longstop', this.pos);
-			}, this), 600);
+			this.timer = _.defer(_.bind(function() {
+				this.app.vein.trigger('scroll:deferstop', this.pos);
+			}, this));
 		},
 
 		updateScroll: _.throttle(function() {
