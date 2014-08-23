@@ -40,21 +40,18 @@ Seven.AppScrollerView = (function() {
 		startScroll: function() {
 			this.app.state('scrolling', true);
 			this.app.vein.trigger('scroll:start', this.pos);
+			
 			this.updateScrollDirection();
-			this.scroll.refresh();
 			clearTimeout(this.timer);
 		},
 
 		endScroll: function() {
-			var self = this;
-
 			this.app.state('scrolling', false);
 			this.app.vein.trigger('scroll:stop', this.pos);
-			this.scroll.refresh();
 
-			this.timer = _.delay(function() {
-				this.app.vein.trigger('scroll:longstop', self.pos);
-			}, 600);
+			this.timer = _.delay(_.bind(function() {
+				this.app.vein.trigger('scroll:longstop', this.pos);
+			}, this), 600);
 		},
 
 		updateScroll: _.throttle(function() {

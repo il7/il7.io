@@ -616,21 +616,18 @@ Seven.AppScrollerView = (function() {
 		startScroll: function() {
 			this.app.state('scrolling', true);
 			this.app.vein.trigger('scroll:start', this.pos);
+			
 			this.updateScrollDirection();
-			this.scroll.refresh();
 			clearTimeout(this.timer);
 		},
 
 		endScroll: function() {
-			var self = this;
-
 			this.app.state('scrolling', false);
 			this.app.vein.trigger('scroll:stop', this.pos);
-			this.scroll.refresh();
 
-			this.timer = _.delay(function() {
-				this.app.vein.trigger('scroll:longstop', self.pos);
-			}, 600);
+			this.timer = _.delay(_.bind(function() {
+				this.app.vein.trigger('scroll:longstop', this.pos);
+			}, this), 600);
 		},
 
 		updateScroll: _.throttle(function() {
@@ -717,24 +714,29 @@ Seven.HeaderView = (function() {
 
 		setupScroll: function() {
 			this.offset = 0;
+			
 			this.app.vein.on('scroll:up scroll:down', function(pos, opts) {
-				this.direction = opts.direction;
-				this.updateOffset(_.isNaN(opts.delta) ? 0 : opts.delta);
-				this.offset = pos > this.height / 4 * 3 ? this.offset : 0;
+				var isPastNav = pos > this.height / 4 * 3;
+
+				this.updateOffset(opts.delta);
+				this.offset = isPastNav ? this.offset : 0;
 				this.ui.mast.css('transform', 'translate(0, -' +  this.offset + 'px, 0)');
 			}, this);
 
 			this.app.vein.on('scroll:longstop', function(pos) {
-				var pastNav = (pos > this.height / 4 * 3);
-				var pastCenter = (this.offset > this.offsetMax / 2);
+				var isPastNav = pos > this.height / 4 * 3;
+				var isPastCenter = this.offset > this.offsetMax / 2 ;
 
-				this.offset = pastNav && pastCenter ? this.offsetMax : 0;
+				this.offset = isPastNav && isPastCenter ? this.offsetMax : 0;
 				this.ui.mast.transition({ y: -1 * this.offset }, 500);
 			}, this);
 		},
 
 		updateOffset: function(delta) {
-			var isNeg = delta < 0 ? true : false;
+			var isNeg;
+
+			delta = _.isNaN(delta) ? 0 : delta
+			isNeg = delta < 0 ? true : false;
 
 			delta = Math.abs(delta) / 10;
 			delta = delta < 1 ? 1 : delta;
