@@ -530,18 +530,18 @@ Seven.DocumentView = Patchbay.View.extend({
   el: document
 });
 Seven.AppScrollerView = (function() {
-	return Patchbay.View.extend({
-		setup: function() {
-			this.app = window.app;
+  return Patchbay.View.extend({
+    setup: function() {
+      this.app = window.app;
 
-			this.setupIScroll();
-			this.setupListeners();
-		},
+      this.setupIScroll();
+      this.setupListeners();
+    },
 
-		setupListeners: function() {
+    setupListeners: function() {
       this.navHeight = 80;
-			this.listenTo(this.app.header, 'resize', this.onHeaderResize);
-		},
+      this.listenTo(this.app.header, 'resize', this.onHeaderResize);
+    },
 
     onHeaderResize: function(height) {
       var self = this;
@@ -556,154 +556,159 @@ Seven.AppScrollerView = (function() {
       });
     },
 
-		setupIScroll: function() {
-			this.lastPos = 0;
-			this.scroll = new IScroll(this.el, {
-			    eventPassthrough: 'horizontal',
-			    scrollbars: 'custom',
-			    mouseWheel: true,
-			    probeType: 3
-			});
+    setupIScroll: function() {
+      this.lastPos = 0;
+      this.scroll = new IScroll(this.el, {
+          eventPassthrough: 'horizontal',
+          scrollbars: 'custom',
+          mouseWheel: true,
+          probeType: 3
+      });
 
-			this.scroll.on('scrollStart', _.bind(this.scrollStart, this));
-			this.scroll.on('scroll', _.bind(this.scrollUpdate, this));
-			this.scroll.on('scrollEnd', _.bind(this.scrollEnd, this));
-		},
+      this.scroll.on('scrollStart', _.bind(this.scrollStart, this));
+      this.scroll.on('scroll', _.bind(this.scrollUpdate, this));
+      this.scroll.on('scrollEnd', _.bind(this.scrollEnd, this));
+    },
 
     cleanup: function() {
       this.scroll.destroy();
     },
 
-		scrollStart: function() {
-			clearTimeout(this.timer);
+    scrollStart: function() {
+      clearTimeout(this.timer);
       this.updateScrollDirection();
       
       this.app.state('scrolling', true);
       this.hook('scroll', 'start', this.pos);
-		},
+    },
 
-		scrollEnd: function() {
-			this.app.state('scrolling', false);
-			this.hook('scroll', 'end', this.pos);
-		},
+    scrollEnd: function() {
+      this.app.state('scrolling', false);
+      this.hook('scroll', 'end', this.pos);
+    },
 
-		scrollUpdate: _.throttle(function() {
-			this.pos = -1 * this.scroll.y;
+    scrollUpdate: _.throttle(function() {
+      this.pos = -1 * this.scroll.y;
 
-			this.updateScrollState();
-			this.updateScrollNav();
-			this.updateScrollDirection();
+      this.updateScrollState();
+      this.updateScrollNav();
+      this.updateScrollDirection();
 
       this.delta = this.pos - this.lastPos;
-			this.lastPos = this.pos;
+      this.lastPos = this.pos;
 
       this.trigger('scroll', this.pos, {
         direction: this.dir,
         lastpos: this.lastPos,
         delta: this.delta
       });
-		}, 20),
+    }, 20),
 
-		updateScrollState: function() {
-			this.trigger('scrolled', this.pos > 0);
-			this.app.state('scrolled', this.pos > 0);
-		},
+    updateScrollState: function() {
+      this.trigger('scrolled', this.pos > 0);
+      this.app.state('scrolled', this.pos > 0);
+    },
 
-		updateScrollNav: function() {
+    updateScrollNav: function() {
       this.trigger('scrolled:nav', this.pos > this.navHeight / 4 * 3);
-			this.app.state('scrolled-nav', this.pos > this.navHeight / 4 * 3);
-		},
+      this.app.state('scrolled-nav', this.pos > this.navHeight / 4 * 3);
+    },
 
-		updateScrollDirection: function() {	
-			var isDir = this.pos < this.lastPos,
+    updateScrollDirection: function() { 
+      var isDir = this.pos < this.lastPos,
         dir = isDir ? 'up' : 'down';
 
-			if (this.dir !== dir) {
-				this.dir = dir;
+      if (this.dir !== dir) {
+        this.dir = dir;
 
-				this.app.state('scrolled-up', isDir);
-				this.app.state('scrolled-down', !isDir);
-			}
-		}
-	});
+        this.app.trigger('scroll:' + dir, this.pos, {
+          direction: this.dir,
+          lastpos: this.lastPos
+        });
+
+        this.app.state('scrolled-up', isDir);
+        this.app.state('scrolled-down', !isDir);
+      }
+    }
+  });
 })();
 Seven.HeaderView = Patchbay.View.extend({
-	ui: {
-		mast: '.l-header-mast',
-		wrapper: '.l-header-wrapper',
-		logo: '.logo',
-		navItems: '.nav-item'
-	},
-	
-	setup: function() {
+  ui: {
+    mast: '.l-header-mast',
+    wrapper: '.l-header-wrapper',
+    logo: '.logo',
+    navItems: '.nav-item'
+  },
+  
+  setup: function() {
     this.window = $(window);
-		this.app = window.app;
+    this.app = window.app;
 
-		this.lastHeight = 0;
-		
-		this.setupResize();
-		this.setupScroll();
-	},
+    this.lastHeight = 0;
+    
+    this.setupResize();
+    this.setupScroll();
+  },
 
-	setupResize: function() {
+  setupResize: function() {
     this.listenTo(this.app.window, 'resize', _.throttle(this.resize, 25));
     this.resize();
-	},
+  },
 
-	resize: function() {
+  resize: function() {
     this.offsetMax = this.height = this.ui.wrapper.height();
 
-		if (this.lastHeight !== this.height) {
-			this.lastHeight = this.height;
-			
-			this.trigger('resize', this.height);
+    if (this.lastHeight !== this.height) {
+      this.lastHeight = this.height;
+      
+      this.trigger('resize', this.height);
 
-			clearTimeout(this.timer);
-			this.timer = _.delay(_.bind(this.resize, this), 100);
-		}
-	},
+      clearTimeout(this.timer);
+      this.timer = _.delay(_.bind(this.resize, this), 100);
+    }
+  },
 
-	setupScroll: function() {
-		this.offset = 0;
+  setupScroll: function() {
+    this.offset = 0;
 
     this.listenTo(this.app.scroller, 'scroll', function(pos, opts) {
-			var isPastNav = pos > this.height / 4 * 3;
+      var isPastNav = pos > this.height / 4 * 3;
 
-			this.updateOffset(opts.delta);
-			this.offset = isPastNav ? this.offset : 0;
-			this.ui.mast.css('transform', 'translate(0, -' +  this.offset + 'px, 0)');
+      this.updateOffset(opts.delta);
+      this.offset = isPastNav ? this.offset : 0;
+      this.ui.mast.css('transform', 'translate(0, -' +  this.offset + 'px, 0)');
     });
 
-		this.listenTo(this.app.scroller, 'scroll:end', function(pos) {
+    this.listenTo(this.app.scroller, 'scroll:end', function(pos) {
       var isPastNav = pos > this.height / 4 * 3;
-			var isPastCenter = this.offset > this.offsetMax / 2 ;
+      var isPastCenter = this.offset > this.offsetMax / 2 ;
 
-			this.offset = isPastNav && isPastCenter ? this.offsetMax : 0;
-			this.ui.mast.transition({ y: -1 * this.offset }, 200);
-		}, this);
-	},
+      this.offset = isPastNav && isPastCenter ? this.offsetMax : 0;
+      this.ui.mast.transition({ y: -1 * this.offset }, 200);
+    }, this);
+  },
 
-	updateOffset: function(delta) {
-		var isNeg;
+  updateOffset: function(delta) {
+    var isNeg;
 
-		delta = _.isNaN(delta) ? 0 : delta;
-		isNeg = delta < 0 ? true : false;
+    delta = _.isNaN(delta) ? 0 : delta;
+    isNeg = delta < 0 ? true : false;
 
-		delta = Math.abs(delta);
+    delta = Math.abs(delta);
     delta = delta > 4 ? 4 : delta;
-		delta = isNeg ? delta * -1 : delta;
+    delta = isNeg ? delta * -1 : delta;
 
-		this.offset += delta;
-		this.offset = (this.offset > this.offsetMax) ? this.offsetMax : this.offset;
-		this.offset = (this.offset < 0) ? 0 : this.offset;
-		this.offset = Math.ceil(this.offset);
-	}
+    this.offset += delta;
+    this.offset = (this.offset > this.offsetMax) ? this.offsetMax : this.offset;
+    this.offset = (this.offset < 0) ? 0 : this.offset;
+    this.offset = Math.ceil(this.offset);
+  }
 });
 Seven.ArticleView = Patchbay.View.extend({ 
-	ui: {
-		content: '.content',
-		nodes: '.content > *'
-	},
+  ui: {
+    content: '.content',
+    nodes: '.content > *'
+  },
 
   setup: function() {
 
@@ -711,16 +716,16 @@ Seven.ArticleView = Patchbay.View.extend({
 });
 
 Seven.ApplicationView = Patchbay.View.extend({
-	el: '#application',
+  el: '#application',
 
-	ui: {
-		header: '.l-header',
-		footer: '.l-footer',
-		content: '#application-content',
-		article: '.l-article'
-	},
+  ui: {
+    header: '.l-header',
+    footer: '.l-footer',
+    content: '#application-content',
+    article: '.l-article'
+  },
 
-	setup: function() {
+  setup: function() {
     this.setupChildren();
 
     this.state('starting', true);
@@ -736,15 +741,15 @@ Seven.ApplicationView = Patchbay.View.extend({
     this.setupPage();
   },
 
-	setupPage: function() {
-		if (this.ui.article.length > 0) {
-			this.article = Seven.ArticleView.create({ el: this.ui.article });
-		}
-	}
+  setupPage: function() {
+    if (this.ui.article.length > 0) {
+      this.article = Seven.ArticleView.create({ el: this.ui.article });
+    }
+  }
 });
 
 $(function() {
-	window.app = Seven.ApplicationView.create();
+  window.app = Seven.ApplicationView.create();
 });
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmpzIiwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZXMiOlsiYXBwLmpzIl0sInNvdXJjZXNDb250ZW50IjpbInZhciBTZXZlbiA9IHt9O1xuXG4vLz1pbmNsdWRlKCd2ZW5kb3IvcHJpc20uanMnKVxuXG4vLz1pbmNsdWRlKCd2aWV3cy93aW5kb3cuanMnKVxuLy89aW5jbHVkZSgndmlld3MvZG9jdW1lbnQuanMnKVxuLy89aW5jbHVkZSgndmlld3MvYXBwLXNjcm9sbGVyLmpzJylcbi8vPWluY2x1ZGUoJ3ZpZXdzL2hlYWRlci5qcycpXG4vLz1pbmNsdWRlKCd2aWV3cy9hcnRpY2xlLmpzJylcblxuU2V2ZW4uQXBwbGljYXRpb25WaWV3ID0gUGF0Y2hiYXkuVmlldy5leHRlbmQoe1xuXHRlbDogJyNhcHBsaWNhdGlvbicsXG5cblx0dWk6IHtcblx0XHRoZWFkZXI6ICcubC1oZWFkZXInLFxuXHRcdGZvb3RlcjogJy5sLWZvb3RlcicsXG5cdFx0Y29udGVudDogJyNhcHBsaWNhdGlvbi1jb250ZW50Jyxcblx0XHRhcnRpY2xlOiAnLmwtYXJ0aWNsZSdcblx0fSxcblxuXHRzZXR1cDogZnVuY3Rpb24oKSB7XG4gICAgdGhpcy5zZXR1cENoaWxkcmVuKCk7XG5cbiAgICB0aGlzLnN0YXRlKCdzdGFydGluZycsIHRydWUpO1xuICAgIF8uZGVsYXkoXy5iaW5kKHRoaXMuc3RhdGUsIHRoaXMpLCAyNTAsICdzdGFydGluZycsIGZhbHNlKTtcbiAgfSxcblxuICBzZXR1cENoaWxkcmVuOiBmdW5jdGlvbigpIHtcbiAgICB0aGlzLndpbmRvdyA9IFNldmVuLldpbmRvd1ZpZXcuY3JlYXRlKCk7XG4gICAgdGhpcy5kb2N1bWVudCA9IFNldmVuLkRvY3VtZW50Vmlldy5jcmVhdGUoKTtcbiAgICB0aGlzLnNjcm9sbGVyID0gU2V2ZW4uQXBwU2Nyb2xsZXJWaWV3LmNyZWF0ZSh7IGVsOiB0aGlzLnVpLmNvbnRlbnQgfSk7XG4gICAgdGhpcy5oZWFkZXIgPSBTZXZlbi5IZWFkZXJWaWV3LmNyZWF0ZSh7IGVsOiB0aGlzLnVpLmhlYWRlciB9KTtcblxuICAgIHRoaXMuc2V0dXBQYWdlKCk7XG4gIH0sXG5cblx0c2V0dXBQYWdlOiBmdW5jdGlvbigpIHtcblx0XHRpZiAodGhpcy51aS5hcnRpY2xlLmxlbmd0aCA+IDApIHtcblx0XHRcdHRoaXMuYXJ0aWNsZSA9IFNldmVuLkFydGljbGVWaWV3LmNyZWF0ZSh7IGVsOiB0aGlzLnVpLmFydGljbGUgfSk7XG5cdFx0fVxuXHR9XG59KTtcblxuLy89aW5jbHVkZSgnc3RhcnR1cC5qcycpIl0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmpzIiwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZXMiOlsiYXBwLmpzIl0sInNvdXJjZXNDb250ZW50IjpbInZhciBTZXZlbiA9IHt9O1xuXG4vLz1pbmNsdWRlKCd2ZW5kb3IvcHJpc20uanMnKVxuXG4vLz1pbmNsdWRlKCd2aWV3cy93aW5kb3cuanMnKVxuLy89aW5jbHVkZSgndmlld3MvZG9jdW1lbnQuanMnKVxuLy89aW5jbHVkZSgndmlld3MvYXBwLXNjcm9sbGVyLmpzJylcbi8vPWluY2x1ZGUoJ3ZpZXdzL2hlYWRlci5qcycpXG4vLz1pbmNsdWRlKCd2aWV3cy9hcnRpY2xlLmpzJylcblxuU2V2ZW4uQXBwbGljYXRpb25WaWV3ID0gUGF0Y2hiYXkuVmlldy5leHRlbmQoe1xuICBlbDogJyNhcHBsaWNhdGlvbicsXG5cbiAgdWk6IHtcbiAgICBoZWFkZXI6ICcubC1oZWFkZXInLFxuICAgIGZvb3RlcjogJy5sLWZvb3RlcicsXG4gICAgY29udGVudDogJyNhcHBsaWNhdGlvbi1jb250ZW50JyxcbiAgICBhcnRpY2xlOiAnLmwtYXJ0aWNsZSdcbiAgfSxcblxuICBzZXR1cDogZnVuY3Rpb24oKSB7XG4gICAgdGhpcy5zZXR1cENoaWxkcmVuKCk7XG5cbiAgICB0aGlzLnN0YXRlKCdzdGFydGluZycsIHRydWUpO1xuICAgIF8uZGVsYXkoXy5iaW5kKHRoaXMuc3RhdGUsIHRoaXMpLCAyNTAsICdzdGFydGluZycsIGZhbHNlKTtcbiAgfSxcblxuICBzZXR1cENoaWxkcmVuOiBmdW5jdGlvbigpIHtcbiAgICB0aGlzLndpbmRvdyA9IFNldmVuLldpbmRvd1ZpZXcuY3JlYXRlKCk7XG4gICAgdGhpcy5kb2N1bWVudCA9IFNldmVuLkRvY3VtZW50Vmlldy5jcmVhdGUoKTtcbiAgICB0aGlzLnNjcm9sbGVyID0gU2V2ZW4uQXBwU2Nyb2xsZXJWaWV3LmNyZWF0ZSh7IGVsOiB0aGlzLnVpLmNvbnRlbnQgfSk7XG4gICAgdGhpcy5oZWFkZXIgPSBTZXZlbi5IZWFkZXJWaWV3LmNyZWF0ZSh7IGVsOiB0aGlzLnVpLmhlYWRlciB9KTtcblxuICAgIHRoaXMuc2V0dXBQYWdlKCk7XG4gIH0sXG5cbiAgc2V0dXBQYWdlOiBmdW5jdGlvbigpIHtcbiAgICBpZiAodGhpcy51aS5hcnRpY2xlLmxlbmd0aCA+IDApIHtcbiAgICAgIHRoaXMuYXJ0aWNsZSA9IFNldmVuLkFydGljbGVWaWV3LmNyZWF0ZSh7IGVsOiB0aGlzLnVpLmFydGljbGUgfSk7XG4gICAgfVxuICB9XG59KTtcblxuLy89aW5jbHVkZSgnc3RhcnR1cC5qcycpIl0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9

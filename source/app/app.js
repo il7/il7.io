@@ -9,16 +9,16 @@ var Seven = {};
 //=include('views/article.js')
 
 Seven.ApplicationView = Patchbay.View.extend({
-	el: '#application',
+  el: '#application',
 
-	ui: {
-		header: '.l-header',
-		footer: '.l-footer',
-		content: '#application-content',
-		article: '.l-article'
-	},
+  ui: {
+    header: '.l-header',
+    footer: '.l-footer',
+    content: '#application-content',
+    article: '.l-article'
+  },
 
-	setup: function() {
+  setup: function() {
     this.setupChildren();
 
     this.state('starting', true);
@@ -34,11 +34,11 @@ Seven.ApplicationView = Patchbay.View.extend({
     this.setupPage();
   },
 
-	setupPage: function() {
-		if (this.ui.article.length > 0) {
-			this.article = Seven.ArticleView.create({ el: this.ui.article });
-		}
-	}
+  setupPage: function() {
+    if (this.ui.article.length > 0) {
+      this.article = Seven.ArticleView.create({ el: this.ui.article });
+    }
+  }
 });
 
 //=include('startup.js')
