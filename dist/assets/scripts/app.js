@@ -679,7 +679,7 @@ Seven.HeaderView = Patchbay.View.extend({
 			var isPastCenter = this.offset > this.offsetMax / 2 ;
 
 			this.offset = isPastNav && isPastCenter ? this.offsetMax : 0;
-			this.ui.mast.transition({ y: -1 * this.offset }, 250);
+			this.ui.mast.transition({ y: -1 * this.offset }, 200);
 		}, this);
 	},
 

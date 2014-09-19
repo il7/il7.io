@@ -1,24 +1,25 @@
 {
-	"name": "il7.io",
-	"homepage": "https://github.com/il7/il7.io",
-	"authors": [
-		"Evan Krambuhl <thekrambuhl@gmail.com>"
-	],
-	"license": "MIT",
-	"version": "0.1.0",
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:il7/il7.io.git"
-	},
-	"dependencies": {
-		"jquery": "~2.1",
-		"lodash": "~2.4",
-		"patchbay": "git@github.com:krambuhl/Patchbay.git#develop",
-		"iscroll": "~5.1.2"
-	},
-	"overrides": {
-		"iscroll": {
-			"main": "build/iscroll-probe.js"
-		}
-	}
+  "name": "il7.io",
+  "homepage": "https://github.com/il7/il7.io",
+  "authors": [
+    "Evan Krambuhl <thekrambuhl@gmail.com>"
+  ],
+  "license": "MIT",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:il7/il7.io.git"
+  },
+  "dependencies": {
+    "jquery": "~2.1",
+    "lodash": "~2.4",
+    "patchbay": "git@github.com:krambuhl/Patchbay.git#develop",
+    "iscroll": "~5.1.2",
+    "jquery.transit": "~0.9.12"
+  },
+  "overrides": {
+    "iscroll": {
+      "main": "build/iscroll-probe.js"
+    }
+  }
 }
