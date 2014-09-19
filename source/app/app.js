@@ -1,4 +1,4 @@
-var Seven = function() { return; };
+var Seven = {};
 
 //=include('vendor/prism.js')
 
@@ -8,54 +8,37 @@ var Seven = function() { return; };
 //=include('views/header.js')
 //=include('views/article.js')
 
-Seven.ApplicationView = (function() {
-	return Tendon.View.extend({
-		el: '#application',
-		ui: {
-			header: '.l-header',
-			footer: '.l-footer',
-			content: '#application-content',
-			article: '.l-article'
-		},
+Seven.ApplicationView = Patchbay.View.extend({
+	el: '#application',
 
-		onRender: function() {
-			this.document = new Seven.DocumentView({ el: document });
-			this.scroller = new Seven.AppScrollerView({ el: this.ui.content });
-			
-			this.header = new Seven.HeaderView({ el: this.ui.header });
+	ui: {
+		header: '.l-header',
+		footer: '.l-footer',
+		content: '#application-content',
+		article: '.l-article'
+	},
 
-			this.setup();
-			this.setupPage();
-			this.setupResize();
-		},
+	setup: function() {
+    this.setupChildren();
 
-		setup: function() {
-			var self = this;
-			self.state('starting', true);
+    this.state('starting', true);
+    _.delay(_.bind(this.state, this), 250, 'starting', false);
+  },
 
-			_.defer(function() {
-				self.vein.trigger('resize');
-			});
+  setupChildren: function() {
+    this.window = Seven.WindowView.create();
+    this.document = Seven.DocumentView.create();
+    this.scroller = Seven.AppScrollerView.create({ el: this.ui.content });
+    this.header = Seven.HeaderView.create({ el: this.ui.header });
 
-			_.delay(function() {
-				self.state('starting', false);
-			}, 500);
-		},
+    this.setupPage();
+  },
 
-		setupResize: function() {
-			$(window).on('resize', _.throttle(_.bind(this.onResize, this), 100));
-		},
-
-		onResize: function() {
-			this.vein.trigger('resize');
-		},
-
-		setupPage: function() {
-			if (this.ui.article.length > 0) {
-				this.article = new Seven.ArticleView({ el: this.ui.article });
-			}
+	setupPage: function() {
+		if (this.ui.article.length > 0) {
+			this.article = Seven.ArticleView.create({ el: this.ui.article });
 		}
-	});
-})()
+	}
+});
 
 //=include('startup.js')

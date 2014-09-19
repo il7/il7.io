@@ -1,3 +1,3 @@
 $(function() {
-	window.app = new Seven.ApplicationView();
+	window.app = Seven.ApplicationView.create();
 });

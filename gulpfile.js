@@ -196,7 +196,7 @@ gulp.task('watch', function () {
   gulp.watch(path.join(dir.src, 'sass/**/*.{css,sass,scss}'), ['styles']);
 
   // run `app` task on js file changes in './source/app'
-  gulp.watch(path.join(dir.src, 'app/**/*.js'), ['watch-test']);
+  gulp.watch(path.join(dir.src, 'app/**/*.js'), ['app']);
 
   // run `icons` task on svg file changes in './source/svg'
   gulp.watch(path.join(dir.src, 'svg/**/*.svg'), ['icons']);
@@ -255,7 +255,6 @@ gulp.task('test', function () {
 gulp.task('watch-test', function(done) {
   sequence('app', 'test', done);
 });
-
 
 
 // Task `compile`

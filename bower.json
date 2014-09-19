@@ -11,16 +11,10 @@
 		"url": "git@github.com:il7/il7.io.git"
 	},
 	"dependencies": {
-		"jquery": "~2.1.1",
-		"underscore": "~1.6.0",
-		"backbone": "~1.1.2",
-		"Backbone.Tendon": "git@github.com:krambuhl/Backbone.Tendon.git#develop",
-		"hammerjs": "~2.0.2",
-		"iscroll": "~5.1.2",
-		"jquery.transit": "~0.9.12"
-	},
-	"resolutions": {
-		"jquery": "~2.1.1"
+		"jquery": "~2.1",
+		"lodash": "~2.4",
+		"patchbay": "git@github.com:krambuhl/Patchbay.git#develop",
+		"iscroll": "~5.1.2"
 	},
 	"overrides": {
 		"iscroll": {

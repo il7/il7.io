@@ -1,6 +1,6 @@
 Seven.AppScrollerView = (function() {
-	return Tendon.View.extend({
-		onRender: function() {
+	return Patchbay.View.extend({
+		setup: function() {
 			this.app = window.app;
 
 			this.setupIScroll();
@@ -8,96 +8,91 @@ Seven.AppScrollerView = (function() {
 		},
 
 		setupListeners: function() {
-			var self = this;
-			this.app.vein.on('header:resize', function(height) {
-				this.$el.css('height', window.innerHeight)
-					.children().eq(0).css('padding-top', height);
-
-				this.navHeight = height;
-
-				_.defer(function() {
-					self.scroll.refresh();
-				});
-			}, this);
+      this.navHeight = 80;
+			this.listenTo(this.app.header, 'resize', this.onHeaderResize);
 		},
 
-		setupIScroll: function() {
-			var self = this;
+    onHeaderResize: function(height) {
+      var self = this;
 
+      this.$el.css('height', window.innerHeight)
+        .children().eq(0).css('padding-top', height);
+
+      this.navHeight = height;
+
+      _.defer(function() {
+        self.scroll.refresh();
+      });
+    },
+
+		setupIScroll: function() {
 			this.lastPos = 0;
-			this.scroll = new IScroll(this.$el.selector, {
+			this.scroll = new IScroll(this.el, {
 			    eventPassthrough: 'horizontal',
 			    scrollbars: 'custom',
 			    mouseWheel: true,
 			    probeType: 3
 			});
 
-			this.scroll.on('scrollStart', _.bind(this.startScroll, this));
-			this.scroll.on('scroll', _.bind(this.updateScroll, this));
-			this.scroll.on('scrollEnd', _.bind(this.endScroll, this));
+			this.scroll.on('scrollStart', _.bind(this.scrollStart, this));
+			this.scroll.on('scroll', _.bind(this.scrollUpdate, this));
+			this.scroll.on('scrollEnd', _.bind(this.scrollEnd, this));
 		},
 
-		startScroll: function() {
-			this.app.state('scrolling', true);
-			this.app.vein.trigger('scroll:start', this.pos);
-			
-			this.updateScrollDirection();
+    cleanup: function() {
+      this.scroll.destroy();
+    },
+
+		scrollStart: function() {
 			clearTimeout(this.timer);
+      this.updateScrollDirection();
+      
+      this.app.state('scrolling', true);
+      this.hook('scroll', 'start', this.pos);
 		},
 
-		endScroll: function() {
+		scrollEnd: function() {
 			this.app.state('scrolling', false);
-			this.app.vein.trigger('scroll:stop', this.pos);
-
-			this.timer = _.defer(_.bind(function() {
-				this.app.vein.trigger('scroll:deferstop', this.pos);
-			}, this));
+			this.hook('scroll', 'end', this.pos);
 		},
 
-		updateScroll: _.throttle(function() {
+		scrollUpdate: _.throttle(function() {
 			this.pos = -1 * this.scroll.y;
-
-			this.app.vein.trigger('scroll:scrolling', this.pos);
 
 			this.updateScrollState();
 			this.updateScrollNav();
 			this.updateScrollDirection();
 
+      this.delta = this.pos - this.lastPos;
 			this.lastPos = this.pos;
-		}, 10),
+
+      this.trigger('scroll', this.pos, {
+        direction: this.dir,
+        lastpos: this.lastPos,
+        delta: this.delta
+      });
+		}, 20),
 
 		updateScrollState: function() {
-			if (this.pos > 0) {
-				this.vein.trigger('scrolled', this.pos);
-				this.app.state('scrolled', true);
-			} else {
-				this.app.state('scrolled', false);
-			}
+			this.trigger('scrolled', this.pos > 0);
+			this.app.state('scrolled', this.pos > 0);
 		},
 
 		updateScrollNav: function() {
-			if (this.pos > this.navHeight / 4 * 3) {
-				this.app.state('scrolled-nav', true);
-			} else {
-				this.app.state('scrolled-nav', false);
-			}
+      this.trigger('scrolled:nav', this.pos > this.navHeight / 4 * 3);
+			this.app.state('scrolled-nav', this.pos > this.navHeight / 4 * 3);
 		},
 
 		updateScrollDirection: function() {	
-			var dir = this.pos < this.lastPos ? 'up' : 'down';
-			
+			var isDir = this.pos < this.lastPos,
+        dir = isDir ? 'up' : 'down';
+
 			if (this.dir !== dir) {
 				this.dir = dir;
-				this.app.state('scrolled-up', this.pos < this.lastPos);
-				this.app.state('scrolled-down', this.pos > this.lastPos);
-			}
 
-			this.app.vein.trigger('scroll:' + dir, this.pos, {
-				direction: dir,
-				pos: this.pos,
-				lastpos: this.lastPos,
-				delta: this.pos - this.lastPos
-			});
-		},
+				this.app.state('scrolled-up', isDir);
+				this.app.state('scrolled-down', !isDir);
+			}
+		}
 	});
 })();

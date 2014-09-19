@@ -1,3 +1,3 @@
-Seven.DocumentView = (function() {
-	return Tendon.View.extend({ });
-})()
+Seven.DocumentView = Patchbay.View.extend({
+  el: document
+});
